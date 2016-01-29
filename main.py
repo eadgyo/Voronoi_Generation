@@ -110,6 +110,16 @@ if __name__ == "__main__":
     canvas.pack()
     fenetre.mainloop()
 """
+def draw_Pol(screen, p, y):
+    fac = 10
+    a = p.getY()*p.getY() - y*y
+    b = (2*(y - p.getY()))
+    for x in range(500):
+        x1 = x + p.getX() - 250
+        h = (p.getX() - x1)*(p.getX() - x1) + a
+        y1 = -h/b
+        screen.create_oval(x1 - 1, y1 - 1, x1 + 1, y1 + 1, fill='black')
+
 if __name__ == "__main__":
     fenetre = Tk()
     canvas = Canvas(fenetre, width=800, height=800, background='white')
@@ -134,9 +144,19 @@ if __name__ == "__main__":
 
 
     #canvas.bind("<Key>", clavier)
-
+    ly = 100
     f = Fortune(vec)
+    p = [f.sites[4], f.sites[5]]
+    for i in p:
+        i.point.draw(canvas)
+        draw_Pol(canvas, i.point, ly)
 
+    a = f.computeBreakPoint(p[0], p[1], ly)
+    a.draw(canvas)
+    print(a)
 
+    canvas.create_line(0, ly, 500, ly)
     canvas.pack()
     fenetre.mainloop()
+
+
