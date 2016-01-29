@@ -63,7 +63,7 @@ class Fortune:
         ly_2 = ly*ly;
 
         # First part
-        h = x1_2 + y1_2 + ly_2
+        h = x1_2 + y1_2 - ly_2
         e = 2*(y1 - ly)
 
         # Second Part
@@ -74,12 +74,12 @@ class Fortune:
         d = (a - 2*((x1*b)/e))
         f = (((h*b)/e) + c)
 
-        delta = -(d*d - 4*b/e*f)
+        delta = (d*d - 4*b*f/e)
         x = 0
         y = 0
         print(delta)
-        assert(delta >= 0)
-        if delta > 0.00001:
+        assert(delta >= 0), "Ca a crashé " + str(delta)
+        if delta < 0.00001:
             x = -d/(2*b/e)
             y = (x*x - 2*x1*x + h)/e
         else:
