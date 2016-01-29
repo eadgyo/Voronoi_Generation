@@ -6,3 +6,11 @@ class Edge:
         self.vec = vec
         self.p0 = p0
         self.p1 = p1
+
+    def addPoint(self, p):
+        if self.p0 is None:
+            self.p0 = p
+        else:
+            assert(self.p1 is not None)
+            self.p1 = p
+

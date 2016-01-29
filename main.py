@@ -110,6 +110,8 @@ if __name__ == "__main__":
     canvas.pack()
     fenetre.mainloop()
 """
+
+
 def draw_Pol(screen, p, y):
     fac = 10
     a = p.getY()*p.getY() - y*y
@@ -119,6 +121,7 @@ def draw_Pol(screen, p, y):
         h = (p.getX() - x1)*(p.getX() - x1) + a
         y1 = -h/b
         screen.create_oval(x1 - 1, y1 - 1, x1 + 1, y1 + 1, fill='black')
+
 
 if __name__ == "__main__":
     fenetre = Tk()
@@ -139,13 +142,10 @@ if __name__ == "__main__":
         vec[i].setY(vec[i].getY() * fac.getY())
 
     canvas.focus_set()
-
-
-
+    fortune = Fortune(vec)
 
     #canvas.bind("<Key>", clavier)
 
-    canvas.create_line(0, ly, 500, ly)
     canvas.pack()
     fenetre.mainloop()
 

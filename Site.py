@@ -3,5 +3,5 @@ class Site:
 
     def __init__(self, point):
         self.point = point
-        self.sites = {}
-        self.edges = {}
+        self.sites = []
+        self.edges = []

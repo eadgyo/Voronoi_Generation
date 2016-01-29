@@ -11,3 +11,7 @@ class BeachLine:
             self.root = Node(p0)
         else:
             self.root.insert(p0)
+
+    def remove(self, p0):
+        assert(self.root is not None)
+        self.root.remove(p0)
