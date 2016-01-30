@@ -49,8 +49,9 @@ def computeBreakPoint(p1, p2, ly):
     f = (((h*b)/e) + c)
 
     delta = (d*d - 4*b*f/e)
-    assert(delta >= 0), "Ca a crashé " + str(delta)
-    if delta < 0.00001:
+    if delta < 0.0:
+        return []
+    elif delta < 0.00001:
         x = -d/(2*b/e)
         y = (x*x - 2*x1*x + h)/e
         return [Vector3D(x, y)]

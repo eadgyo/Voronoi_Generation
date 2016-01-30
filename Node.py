@@ -1,4 +1,4 @@
-
+from Geom import *
 
 class Node:
     def __init__(self, site = None):
@@ -68,6 +68,25 @@ class Node:
                 else:
                     return l
 
+    def update(self, ly):
+        iNode1 = self.left.max()
+        iNode2 = self.right.low()
+        c = None
+        breakpoints = computeBreakPoint(iNode1.site, iNode2.site, ly)
+        if len(breakpoints) == 2:
+            if iNode1.site.point.getY() < iNode2.site.point.getY():
+                c = breakpoints[0]
+            else:
+                c = breakpoints[1]
+        else:
+            assert(len(breakpoints) != 0)
+            c = breakpoints[0]
+        self.value = c.getX()
+
+        if not self.left.isLeaf():
+            self.left.update(ly)
+        if not self.right.isLeaf():
+            self.right.update(ly)
 
 
     def isLeaf(self):

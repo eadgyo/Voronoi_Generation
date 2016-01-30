@@ -29,11 +29,12 @@ class Fortune:
 
     def create(self):
         while len(self.events) != 0:
+            self.beachLine.update(self.events[len(self.events)-1].point.getY())
+
             if type(self.events[len(self.events)-1]) == VSite:
                 self.handleVertex()
             else:
                 self.handleSite()
-
 
     def handleSite(self):
         site = self.events.pop(len(self.events)-1) #SweapLine
@@ -51,6 +52,7 @@ class Fortune:
                 min = findMinCircle(p1, p, site)
                 if min.point.y > site.point.y:
                     self.addEvent(min)
+
 
     def handleVertex(self):
         vSite = self.events.pop(len(self.events)-1)
@@ -89,6 +91,7 @@ class Fortune:
                     self.addEvent(min)
         else:
             print("normal?")
+
 
         #removeEvent
 
