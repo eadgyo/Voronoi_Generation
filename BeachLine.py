@@ -9,8 +9,9 @@ class BeachLine:
     def insert(self, p0):
         if self.root is None:
             self.root = Node(p0)
+            return [None, None, None]
         else:
-            self.root.insert(p0)
+            return self.root.insert(p0)
 
     def remove(self, p0):
         assert(self.root is not None)

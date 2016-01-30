@@ -49,13 +49,11 @@ def computeBreakPoint(p1, p2, ly):
     f = (((h*b)/e) + c)
 
     delta = (d*d - 4*b*f/e)
-    x = 0
-    y = 0
-    print(delta)
     assert(delta >= 0), "Ca a crashé " + str(delta)
     if delta < 0.00001:
         x = -d/(2*b/e)
         y = (x*x - 2*x1*x + h)/e
+        return [Vector3D(x, y)]
     else:
         xa = (-d + math.sqrt(delta))/(2*b/e)
         xb = (-d - math.sqrt(delta))/(2*b/e)
@@ -63,17 +61,7 @@ def computeBreakPoint(p1, p2, ly):
         # On prend entre les deux
         ya = (xa*xa - 2*x1*xa + h)/e
         yb = (xb*xb - 2*x1*xb + h)/e
-
-        if (ya >= y1 and ya <= y2) or (ya <= y1 and ya >= y2):
-            x = xa
-            y = ya
-        else:
-            x = xb
-            y = yb
-
-    breakPoint = Vector3D(x, y)
-    return breakPoint
-
+        return [Vector3D(xa, ya), Vector3D(xb, yb)]
 
 def createEdge(p0, p1):
     vec = p1 - p0
