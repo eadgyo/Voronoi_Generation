@@ -106,17 +106,23 @@ if __name__ == "__main__":
 
 def clavier(event):
     global coords
-    print("--- New ---")
-    print(fortune.beachLine.array())
-    fortune.create()
-    print(fortune.beachLine.array())
-    print("")
+
     touche = event.keysym
     canvas.delete(ALL)
-    ly = 0
-    if len(fortune.rEvents) != 0:
-        ly = fortune.rEvents[len(fortune.rEvents)-1].point.getY()*fac.getY()
-    canvas.create_line(0, ly, 500, ly, fill="red")
+
+    if (ly[0]+ 10)/fac.getY()  >= fortune.events[len(fortune.events) - 1].point.getY() and not fortune.stop:
+        ly[0] = fortune.events[len(fortune.events) - 1].point.getY()*fac.getY()
+        before = fortune.beachLine.array()
+        fortune.create()
+        print("--- Array ---")
+        print(before)
+        print(fortune.beachLine.array())
+        print("-------------")
+        print("")
+    else:
+        ly[0] += 10
+
+    canvas.create_line(0, ly[0], 500, ly[0], fill="red")
     for i in range(len(vec)):
         a = vec[i].copy()
         a.setX(vec[i].getX() * fac.getX())
@@ -130,7 +136,8 @@ def clavier(event):
             a.setX(rE[i].point.getX() * fac.getX())
             a.setY(rE[i].point.getY() * fac.getY())
             a.draw(canvas)
-            draw_Pol(canvas, a, ly)
+            draw_Pol(canvas, a, ly[0])
+            canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(rE[i]))
 
     E = fortune.events
     for i in range(len(E)):
@@ -139,8 +146,22 @@ def clavier(event):
             a.setX(E[i].point.getX() * fac.getX())
             a.setY(E[i].point.getY() * fac.getY())
             a.draw(canvas, "blue")
+            canvas.create_text(a.getX() - 10, a.getY()  - 12, anchor=W, font="Arial 8", text=str(E[i]))
+            center = E[i].center.copy()
+            center.setX(center.getX() * fac.getX())
+            center.setY(center.getY() * fac.getY())
+            dist = a.getY() - center.getY()
 
-    fortune.beachLine.draw(canvas, 1000, 100, 16)
+
+            canvas.create_oval(center.getX() - dist, center.getY() - dist, center.getX() + dist, center.getY() + dist)
+        else:
+            a = E[i].point.copy()
+            a.setX(E[i].point.getX() * fac.getX())
+            a.setY(E[i].point.getY() * fac.getY())
+            a.draw(canvas)
+            canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(E[i]))
+
+    fortune.beachLine.draw(canvas, 1000, 100, 6)
 
 
 
@@ -176,7 +197,7 @@ if __name__ == "__main__":
 
 
     fac = Vector3D(60, 60)
-
+    ly = [0]
 
 
     canvas.focus_set()

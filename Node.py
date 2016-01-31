@@ -24,7 +24,7 @@ class Node:
             p3 = self.nextSite()
             self.split(p0)
             return [p1, p, p3]
-        elif self.value < p0.point.getX():
+        elif self.value > p0.point.getX():
             return self.left.insert(p0)
         else:
             return self.right.insert(p0)
@@ -166,7 +166,7 @@ class Node:
 
         if self.left is not None:
             a += self.left.deep()
-        elif self.right is not None:
+        if self.right is not None:
             b += self.right.deep()
         return max(a, b)
 
@@ -177,8 +177,8 @@ class Node:
         elif self.root is None:
             v = self.deep() - 1
             leafs = math.pow(2, v)
-            sizeA = sizeD*math.pow(1.4, v)
-            size = sizeA*leafs*3/4
+            sizeA = sizeD*math.pow(1.04, v)
+            size = sizeA*leafs/2
 
             if self.left is not None:
                 X = x - size

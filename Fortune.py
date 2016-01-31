@@ -13,7 +13,7 @@ class Fortune:
         self.beachLine = BeachLine()
         self.vertex = []
         self.rEvents = []
-
+        self.stop = False
         # Sort Y
         for i in range(len(self.points)):
             for j in range(i+1, len(self.points)):
@@ -30,20 +30,31 @@ class Fortune:
         #self.create()
 
     def create(self):
+        if self.stop:
+           return
         if len(self.events) != 0:
             if len(self.events) == 4:
                 pass
             self.beachLine.update(self.events[len(self.events)-1].point.getY())
 
             if type(self.events[len(self.events)-1]) == VSite:
-                self.handleVertex()
+                self.stop = True
+                #self.handleVertex()
             else:
                 self.handleSite()
+
+            self.beachLine.update(self.events[len(self.events)-1].point.getY())
 
     def handleSite(self):
         site = self.events.pop(len(self.events)-1) #SweapLine
         self.rEvents.append(site)
         [p1, p, p3] = self.beachLine.insert(site) # Here <-----------------------
+
+        print("=== Site Ev ===")
+        print("Site = " + str(site))
+        print("insert-> " + str(p1) + ", " + str(p) + ", " + str(p3))
+        print("===============")
+
         if p is not None:
             if p1 is not None and p3 is not None:
                 self.removeEvent(p1, p, p3)
@@ -61,8 +72,16 @@ class Fortune:
 
     def handleVertex(self):
         vSite = self.events.pop(len(self.events)-1)
+
+        print("=== Vertex Ev ===")
+        print("Sites = " + str(vSite.sites[0]) + ", " + str(vSite.sites[1]) + ", " + str(vSite.sites[2]))
         self.rEvents.append(vSite)
         [p1, pi, pk, p2] = self.beachLine.removeFromVSite(vSite)
+
+
+
+        print("remove-> " + str(p1) + ", " + str(pi) + ", " + str(pk) + ", " + str(p2))
+        print("=================")
 
         if pi is not None and pk is not None:
             edge1 = None
