@@ -12,6 +12,7 @@ class Fortune:
         self.events = []
         self.beachLine = BeachLine()
         self.vertex = []
+        self.rEvents = []
 
         # Sort Y
         for i in range(len(self.points)):
@@ -28,7 +29,9 @@ class Fortune:
         #self.create()
 
     def create(self):
-        while len(self.events) != 0:
+        if len(self.events) != 0:
+            if len(self.events) == 4:
+                pass
             self.beachLine.update(self.events[len(self.events)-1].point.getY())
 
             if type(self.events[len(self.events)-1]) == VSite:
@@ -38,25 +41,27 @@ class Fortune:
 
     def handleSite(self):
         site = self.events.pop(len(self.events)-1) #SweapLine
-        [p1, p, p3] = self.beachLine.insert(site)
+        self.rEvents.append(site)
+        [p1, p, p3] = self.beachLine.insert(site) # Here <-----------------------
         if p is not None:
             if p1 is not None and p3 is not None:
                 self.removeEvent(p1, p, p3)
             createEdge(p, site)
             if p1 is not None:
                 min = findMinCircle(p1, p, site)
-                if min.point.y > site.point.y:
+                if min.point.getY() > site.point.getY():
                     self.addEvent(min)
 
             if p3 is not None:
-                min = findMinCircle(p1, p, site)
-                if min.point.y > site.point.y:
+                min = findMinCircle(p3, p, site)
+                if min.point.getY() > site.point.getY():
                     self.addEvent(min)
 
 
     def handleVertex(self):
         vSite = self.events.pop(len(self.events)-1)
-        [p1, pi, pk, p2] = self.beachLine.remove(vSite)
+        self.rEvents.append(vSite)
+        [p1, pi, pk, p2] = self.beachLine.removeFromVSite(vSite)
 
         if pi is not None and pk is not None:
             edge1 = None
@@ -81,13 +86,13 @@ class Fortune:
             if p1 is not None:
                 self.removeEvent(p1, pi, vSite)
                 min = findMinCircle(p1, pi, pk)
-                if min.point.y > vSite.point.y:
+                if min.point.getY() > vSite.point.getY():
                     self.addEvent(min)
 
             if p2 is not None:
                 self.removeEvent(vSite, pk, p2)
                 min = findMinCircle(pi, pk, p2)
-                if min.point.y > vSite.point.y:
+                if min.point.getY() > vSite.point.getY():
                     self.addEvent(min)
         else:
             print("normal?")
@@ -96,12 +101,17 @@ class Fortune:
         #removeEvent
 
     def addEvent(self, site):
-        i = 0
-        while i < len(self.events):
+        i = len(self.events) - 1
+        while i > -1:
             if site.point.getY() < self.events[i].point.getY():
                 break
-            i += 1
-        self.events.append(site, i)
+            i -= 1
+
+        # test
+        for x in range(len(self.events)-1):
+            if self.events[x].point.getY() < self.events[x+1].point.getY():
+                print("error")
+        self.events.insert(i+1, site)
 
     def removeEvent(self, p1, p, p3):
         for i in range(len(p.sites)):

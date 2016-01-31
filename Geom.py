@@ -28,6 +28,9 @@ def findMinCircle(p1, p2, p3):
     minY = Vector3D(x, y + magn)
 
     vSite = VSite(minY, center)
+    vSite.sites.append(p1)
+    vSite.sites.append(p2)
+    vSite.sites.append(p3)
     return vSite
 
 
@@ -65,7 +68,7 @@ def computeBreakPoint(p1, p2, ly):
         return [Vector3D(xa, ya), Vector3D(xb, yb)]
 
 def createEdge(p0, p1):
-    vec = p1 - p0
+    vec = p1.point - p0.point
     edge = Edge(Vector3D(-vec.getY(), vec.getX()))
     p0.edges.append(edge)
     p1.edges.append(edge)

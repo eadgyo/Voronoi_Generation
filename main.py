@@ -1,6 +1,7 @@
 from tkinter import *
 from Fortune import Fortune
 from Vector3D import Vector3D
+from VSite import VSite
 import math
 """
 def clavier(event):
@@ -63,15 +64,7 @@ def checkParabola(vec, beachLine, lY):
             j += 1
         x -= 1
 
-def draw_Pol(screen, p, y):
-    fac = 10
-    a = p.getY()*p.getY() - y*y
-    b = (2*(y - p.getY()))
-    for x in range(500):
-        x1 = x + p.getX() - 250
-        h = (p.getX() - x1)*(p.getX() - x1) + a
-        y1 = -h/b
-        screen.create_oval(x1 - 1, y1 - 1, x1 + 1, y1 + 1, fill='black')
+
 
 if __name__ == "__main__":
     fenetre = Tk()
@@ -111,16 +104,52 @@ if __name__ == "__main__":
     fenetre.mainloop()
 """
 
+def clavier(event):
+    global coords
+
+    touche = event.keysym
+    canvas.delete(ALL)
+    ly = 0
+    if len(fortune.rEvents) != 0:
+        ly = fortune.rEvents[len(fortune.rEvents)-1].point.getY()*fac.getY()
+    canvas.create_line(0, ly, 500, ly, fill="red")
+    for i in range(len(vec)):
+        a = vec[i].copy()
+        a.setX(vec[i].getX() * fac.getX())
+        a.setY(vec[i].getY() * fac.getY())
+        a.draw(canvas)
+
+    rE = fortune.rEvents
+    for i in range(len(rE)):
+        if type(rE[i]) is not VSite:
+            a = rE[i].point.copy()
+            a.setX(rE[i].point.getX() * fac.getX())
+            a.setY(rE[i].point.getY() * fac.getY())
+            a.draw(canvas)
+            draw_Pol(canvas, a, ly)
+
+    E = fortune.events
+    for i in range(len(E)):
+        if type(E[i]) == VSite:
+            a = E[i].point.copy()
+            a.setX(E[i].point.getX() * fac.getX())
+            a.setY(E[i].point.getY() * fac.getY())
+            a.draw(canvas, "blue")
+
+
+    fortune.create()
+
 
 def draw_Pol(screen, p, y):
     fac = 10
     a = p.getY()*p.getY() - y*y
     b = (2*(y - p.getY()))
-    for x in range(500):
-        x1 = x + p.getX() - 250
-        h = (p.getX() - x1)*(p.getX() - x1) + a
-        y1 = -h/b
-        screen.create_oval(x1 - 1, y1 - 1, x1 + 1, y1 + 1, fill='black')
+    if b != 0.0:
+        for x in range(500):
+            x1 = x + p.getX() - 250
+            h = (p.getX() - x1)*(p.getX() - x1) + a
+            y1 = -h/b
+            screen.create_oval(x1 - 1, y1 - 1, x1 + 1, y1 + 1, fill='black')
 
 
 if __name__ == "__main__":
@@ -128,25 +157,29 @@ if __name__ == "__main__":
     canvas = Canvas(fenetre, width=800, height=800, background='white')
 
     vec = []
-    vec.append(Vector3D(3, 2))
-    vec.append(Vector3D(4, 3))
-    vec.append(Vector3D(6, 6))
-    vec.append(Vector3D(3.5, 7))
-    vec.append(Vector3D(2, 6.2))
-    vec.append(Vector3D(5, 5))
+    vec.append(Vector3D(2, 1))
+    vec.append(Vector3D(4, 1.1))
+    vec.append(Vector3D(5, 2.7))
+    vec.append(Vector3D(3, 3))
+    vec.append(Vector3D(4.2, 4))
+    vec.append(Vector3D(5.2, 5))
+    vec.append(Vector3D(3, 5.2))
+    vec.append(Vector3D(1, 6))
+    vec.append(Vector3D(3, 7.2))
+    vec.append(Vector3D(5.4, 7))
+
 
     fac = Vector3D(60, 60)
 
-    for i in range(len(vec)):
-        vec[i].setX(vec[i].getX() * fac.getX())
-        vec[i].setY(vec[i].getY() * fac.getY())
+
 
     canvas.focus_set()
     fortune = Fortune(vec)
-
-    #canvas.bind("<Key>", clavier)
+    canvas.bind("<Key>", clavier)
 
     canvas.pack()
+
     fenetre.mainloop()
+
 
 

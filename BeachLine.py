@@ -21,3 +21,11 @@ class BeachLine:
     def remove(self, p0):
         assert(self.root is not None)
         self.root.remove(p0)
+
+    def removeFromVSite(self, vSite):
+        p = vSite.sites
+        for i in range(len(p)):
+            for j in range(i+1, len(p)):
+                if p[i].point.getX() < p[i].point.getX():
+                    p[i], p[j] = p[j], p[i]
+        self.remove(vSite)
