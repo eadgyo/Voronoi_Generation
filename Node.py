@@ -1,5 +1,5 @@
 from Geom import *
-
+from tkinter import Tk, Canvas, Frame, BOTH, W
 class Node:
     def __init__(self, site = None):
         self.site = site
@@ -160,6 +160,61 @@ class Node:
         self.value = p.point.getY()
         self.right.value = p.point.getY()
 
+    def deep(self):
+        a = 0
+        b = 0
+        if self.isLeaf():
+            return 1
+        elif self.left is not None:
+            a = self.left.deep() + 1
+        elif self.right is not None:
+            b = self.right.deep() + 1
+        return max(a, b)
+
+    def draw(self, screen, x, y, sizeD, sizeB):
+        if self.root is None:
+            v = self.deep() - 1
+            leafs = math.pow(2, v)
+            size = (sizeD+sizeB)*leafs
+            middleX = x
+
+            if self.left is not None:
+                X = x - size
+                Y = y + sizeD*2
+                screen.create_line(x, y, X, Y)
+                self.left.draw(screen, X, Y, sizeD, sizeB)
+
+            if self.right is not None:
+                X = x + size
+                Y =  y + sizeD*2
+                screen.create_line(x, y, X, Y)
+                self.right.draw(screen, X, Y, sizeD, sizeB)
+
+            screen.create_oval(middleX - 5, y - 5, middleX + 5, y + 5, fill="blue")
+            screen.create_text(x - 6, y - 15, anchor=W, font="Arial 8", text=str(self.value))
+        elif self.isLeaf():
+            screen.create_oval(x - 5, y - 5, x + 5, y + 5, fill="red")
+            screen.create_text(x - 20, y + 12, anchor=W, font="Arial 8", text=str(self.site))
+        else:
+
+
+            if self.left is not None:
+                X = x - (sizeD + sizeB)
+                Y =  y + sizeD*2
+                screen.create_line(x, y, X, Y)
+                self.left.draw(screen, X, Y, sizeD, sizeB)
+
+            if self.right is not None:
+                X = x + (sizeD + sizeB)
+                Y =  y + sizeD*2
+                screen.create_line(x, y, X, Y)
+                self.right.draw(screen, X, Y, sizeD, sizeB)
+
+            screen.create_oval(x - 5, y - 5, x + 5, y + 5, fill="white")
+            screen.create_text(x - 6, y - 15, anchor=W, font="Arial 8", text=str(self.value))
+
+
+
     def __str__(self):
         if self.isLeaf():
             if self.site is None:
@@ -169,7 +224,6 @@ class Node:
             return "[ " + str(self.site.point.getX()) + ", " + str(self.site.point.getY()) + " ]"
         else:
             return str(self.value)
-
 
 
 

@@ -136,6 +136,7 @@ def clavier(event):
             a.setY(E[i].point.getY() * fac.getY())
             a.draw(canvas, "blue")
 
+    fortune.beachLine.draw(canvas, 600, 100, 16, 8)
 
     fortune.create()
 
