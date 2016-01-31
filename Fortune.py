@@ -114,11 +114,14 @@ class Fortune:
         self.events.insert(i+1, site)
 
     def removeEvent(self, p1, p, p3):
-        for i in range(len(p.sites)):
+        i = 0
+        while i < len(p.sites):
             if p.sites[i] in p1.sites:
                 if p.sites[i] in p3.sites:
                     self.events.remove(p.sites[i])
-                    p1.remove(p.sites[i])
-                    p3.remove(p.sites[i])
-                    p.pop(i)
+                    p1.sites.remove(p.sites[i])
+                    p3.sites.remove(p.sites[i])
+                    p.sites.remove(p.sites[i])
+                    i -= 1
+            i += 1
 

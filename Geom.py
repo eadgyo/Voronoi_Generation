@@ -31,6 +31,9 @@ def findMinCircle(p1, p2, p3):
     vSite.sites.append(p1)
     vSite.sites.append(p2)
     vSite.sites.append(p3)
+    p1.sites.append(vSite)
+    p2.sites.append(vSite)
+    p3.sites.append(vSite)
     return vSite
 
 
