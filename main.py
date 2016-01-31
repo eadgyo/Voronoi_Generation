@@ -106,7 +106,11 @@ if __name__ == "__main__":
 
 def clavier(event):
     global coords
-
+    print("--- New ---")
+    print(fortune.beachLine.array())
+    fortune.create()
+    print(fortune.beachLine.array())
+    print("")
     touche = event.keysym
     canvas.delete(ALL)
     ly = 0
@@ -136,9 +140,10 @@ def clavier(event):
             a.setY(E[i].point.getY() * fac.getY())
             a.draw(canvas, "blue")
 
-    fortune.beachLine.draw(canvas, 600, 100, 16, 8)
+    fortune.beachLine.draw(canvas, 1000, 100, 16)
 
-    fortune.create()
+
+
 
 
 def draw_Pol(screen, p, y):
@@ -155,7 +160,7 @@ def draw_Pol(screen, p, y):
 
 if __name__ == "__main__":
     fenetre = Tk()
-    canvas = Canvas(fenetre, width=800, height=800, background='white')
+    canvas = Canvas(fenetre, width=1600, height=900, background='white')
 
     vec = []
     vec.append(Vector3D(2, 1))

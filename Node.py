@@ -161,59 +161,63 @@ class Node:
         self.right.value = p.point.getY()
 
     def deep(self):
-        a = 0
-        b = 0
-        if self.isLeaf():
-            return 1
-        elif self.left is not None:
-            a = self.left.deep() + 1
+        a = 1
+        b = 1
+
+        if self.left is not None:
+            a += self.left.deep()
         elif self.right is not None:
-            b = self.right.deep() + 1
+            b += self.right.deep()
         return max(a, b)
 
-    def draw(self, screen, x, y, sizeD, sizeB):
-        if self.root is None:
+    def draw(self, screen, x, y, sizeD):
+        if self.isLeaf():
+            screen.create_oval(x - 5, y - 5, x + 5, y + 5, fill="red")
+            screen.create_text(x - 10, y + 12, anchor=W, font="Arial 8", text=str(self.site))
+        elif self.root is None:
             v = self.deep() - 1
             leafs = math.pow(2, v)
-            size = (sizeD+sizeB)*leafs
-            middleX = x
+            sizeA = sizeD*math.pow(1.4, v)
+            size = sizeA*leafs*3/4
 
             if self.left is not None:
                 X = x - size
-                Y = y + sizeD*2
+                Y = y + 20*2
                 screen.create_line(x, y, X, Y)
-                self.left.draw(screen, X, Y, sizeD, sizeB)
+                self.left.draw(screen, X, Y, size/2)
 
             if self.right is not None:
                 X = x + size
-                Y =  y + sizeD*2
+                Y =  y + 20*2
                 screen.create_line(x, y, X, Y)
-                self.right.draw(screen, X, Y, sizeD, sizeB)
+                self.right.draw(screen, X, Y, size/2)
 
-            screen.create_oval(middleX - 5, y - 5, middleX + 5, y + 5, fill="blue")
-            screen.create_text(x - 6, y - 15, anchor=W, font="Arial 8", text=str(self.value))
-        elif self.isLeaf():
-            screen.create_oval(x - 5, y - 5, x + 5, y + 5, fill="red")
-            screen.create_text(x - 20, y + 12, anchor=W, font="Arial 8", text=str(self.site))
+            screen.create_oval(x - 5, y - 5, x + 5, y + 5, fill="blue")
+            screen.create_text(x - 6, y - 15, anchor=W, font="Arial 8", text=str(round(self.value,1)))
         else:
-
-
             if self.left is not None:
-                X = x - (sizeD + sizeB)
-                Y =  y + sizeD*2
+                X = x - sizeD
+                Y =  y + 20*2
                 screen.create_line(x, y, X, Y)
-                self.left.draw(screen, X, Y, sizeD, sizeB)
+                self.left.draw(screen, X, Y, sizeD/2)
 
             if self.right is not None:
-                X = x + (sizeD + sizeB)
-                Y =  y + sizeD*2
+                X = x + sizeD
+                Y =  y + 20*2
                 screen.create_line(x, y, X, Y)
-                self.right.draw(screen, X, Y, sizeD, sizeB)
+                self.right.draw(screen, X, Y, sizeD/2)
 
             screen.create_oval(x - 5, y - 5, x + 5, y + 5, fill="white")
-            screen.create_text(x - 6, y - 15, anchor=W, font="Arial 8", text=str(self.value))
+            screen.create_text(x - 6, y - 15, anchor=W, font="Arial 8", text=str(round(self.value,1)))
 
-
+    def array(self, l):
+        if self.isLeaf():
+            l.append(str(self.site))
+        else:
+            if self.left is not None:
+                self.left.array(l)
+            if self.right is not None:
+                self.right.array(l)
 
     def __str__(self):
         if self.isLeaf():
@@ -223,7 +227,7 @@ class Node:
                 return "No Point"
             return "[ " + str(self.site.point.getX()) + ", " + str(self.site.point.getY()) + " ]"
         else:
-            return str(self.value)
+            return str(v)
 
 
 

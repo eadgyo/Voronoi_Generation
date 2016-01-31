@@ -5,6 +5,8 @@ class Site:
         self.point = point
         self.sites = []
         self.edges = []
+        self.name = ""
 
     def __str__(self):
-        return "[ " + str(self.point.getX()) + ", " +  str(self.point.getY()) + " ]"
+        return self.name
+        #return "[ " + str(self.point.getX()) + ", " +  str(self.point.getY()) + " ]"

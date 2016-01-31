@@ -23,6 +23,7 @@ class Fortune:
         # Convert points into sites and create events
         for i in range(len(self.points)):
             site = Site(self.points[i])
+            site.name = "p" + str(i)
             self.sites.append(site)
             self.events.append(site)
 

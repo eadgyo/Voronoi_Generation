@@ -29,6 +29,13 @@ class BeachLine:
                 if p[i].point.getX() < p[i].point.getX():
                     p[i], p[j] = p[j], p[i]
         self.remove(vSite)
-    def draw(self, screen, x, y, sizeD, sizeB):
+
+    def draw(self, screen, x, y, sizeD):
         if self.root is not None:
-            self.root.draw(screen, x, y, sizeD, sizeB)
+            self.root.draw(screen, x, y, sizeD)
+
+    def array(self):
+        l = []
+        if self.root is not None:
+            self.root.array(l)
+        return l
