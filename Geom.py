@@ -70,8 +70,23 @@ def computeBreakPoint(p1, p2, ly):
         yb = (xb*xb - 2*x1*xb + h)/e
         return [Vector3D(xa, ya), Vector3D(xb, yb)]
 
+
 def createEdge(p0, p1):
     vec = p1.point - p0.point
     edge = Edge(Vector3D(-vec.getY(), vec.getX()))
     p0.edges.append(edge)
     p1.edges.append(edge)
+
+
+def vertexVerif(min):
+    for i in range(len(min.sites)):
+        for j in range(i+1, len(min.sites)):
+            if min.sites[i].point.getX() > min.sites[j].point.getX():
+                min.sites[i], min.sites[j] = min.sites[j], min.sites[i]
+    if min.sites[1].point.getY() <= min.sites[0].point.getY() and min.sites[1].point.getY() <= min.sites[2].point.getY():
+        min.type = 0
+    elif min.sites[1].point.getY() > min.sites[0].point.getY() and min.sites[1].point.getY() > min.sites[2].point.getY():
+        min.type = 1
+    else:
+        min.type = 0
+        print("How to handle this thing?")

@@ -31,12 +31,14 @@ class Node:
 
     def remove(self, p0):
         if p0.sites[1] is self.site:
-            pi = self.lastSite()
-            if pi in p0.sites:
-                pk = self.nextSite()
-                if pk in p0.sites:
-                    p1 = pi.lastSite()
-                    p2 = pk.nextSite()
+            piN = self.last()
+            if piN.site in p0.sites:
+                pkN = self.next()
+                if pkN.site in p0.sites:
+                    p1 = piN.lastSite()
+                    p2 = pkN.nextSite()
+                    pi = piN.site
+                    pk = pkN.site
                     if self.root.left is self:
                         if self.root.root.left is self.root:
                             self.root.root.left = self.root.right
@@ -52,11 +54,11 @@ class Node:
                     return [p1, pi, pk, p2]
 
         if self.isLeaf():
-            assert(False), "No site found"
-            return [None, None, None, None]
+            #assert(False), "No site found"
+            return None
         else:
             l = self.left.remove(p0)
-            if l is not None:
+            if l is None:
                 return self.right.remove(p0)
             else:
                 return l

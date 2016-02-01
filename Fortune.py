@@ -38,8 +38,8 @@ class Fortune:
             self.beachLine.update(self.events[len(self.events)-1].point.getY())
 
             if type(self.events[len(self.events)-1]) == VSite:
-                self.stop = True
-                #self.handleVertex()
+                #self.stop = True
+                self.handleVertex()
             else:
                 self.handleSite()
 
@@ -61,14 +61,17 @@ class Fortune:
             createEdge(p, site)
             if p1 is not None:
                 min = findMinCircle(p1, p, site)
+                min.on = p
                 if min.point.getY() > site.point.getY():
+                    vertexVerif(min)
                     self.addEvent(min)
 
             if p3 is not None:
                 min = findMinCircle(p3, p, site)
+                min.on = p
                 if min.point.getY() > site.point.getY():
+                    vertexVerif(min)
                     self.addEvent(min)
-
 
     def handleVertex(self):
         vSite = self.events.pop(len(self.events)-1)
@@ -76,9 +79,8 @@ class Fortune:
         print("=== Vertex Ev ===")
         print("Sites = " + str(vSite.sites[0]) + ", " + str(vSite.sites[1]) + ", " + str(vSite.sites[2]))
         self.rEvents.append(vSite)
+
         [p1, pi, pk, p2] = self.beachLine.removeFromVSite(vSite)
-
-
 
         print("remove-> " + str(p1) + ", " + str(pi) + ", " + str(pk) + ", " + str(p2))
         print("=================")
@@ -107,12 +109,14 @@ class Fortune:
                 self.removeEvent(p1, pi, vSite)
                 min = findMinCircle(p1, pi, pk)
                 if min.point.getY() > vSite.point.getY():
+                    vertexVerif(min)
                     self.addEvent(min)
 
             if p2 is not None:
                 self.removeEvent(vSite, pk, p2)
                 min = findMinCircle(pi, pk, p2)
                 if min.point.getY() > vSite.point.getY():
+                    vertexVerif(min)
                     self.addEvent(min)
         else:
             print("normal?")
