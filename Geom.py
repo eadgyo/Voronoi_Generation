@@ -28,12 +28,15 @@ def findMinCircle(p1, p2, p3):
     minY = Vector3D(x, y + magn)
 
     vSite = VSite(minY, center)
+
     vSite.sites.append(p1)
     vSite.sites.append(p2)
     vSite.sites.append(p3)
     p1.sites.append(vSite)
     p2.sites.append(vSite)
     p3.sites.append(vSite)
+
+
     return vSite
 
 
@@ -79,14 +82,92 @@ def createEdge(p0, p1):
 
 
 def vertexVerif(min):
+    # type 0
+    # -------------------------------------
+    # ------------------*------------------
+    # ------------------p2-----------------
+    # -----*-------------------------------
+    # -----p1-----------------------*------
+    # -----------------------------p3------
+
+    # type 1
+    # On regarde sue quelle courbe on est actuellement
+    # Pour ca on calcule la collision entre les deux courbes de p1 et p3
+    # ------------------------------*------
+    # -----*------------------------p3-----
+    # -----p1------------------------------
+    # -------------------------------------
+    # -----------------*-------------------
+    # ----------------p2-------------------
+
     for i in range(len(min.sites)):
         for j in range(i+1, len(min.sites)):
             if min.sites[i].point.getX() > min.sites[j].point.getX():
                 min.sites[i], min.sites[j] = min.sites[j], min.sites[i]
+
+    # Ajout des edges et set le type
     if min.sites[1].point.getY() <= min.sites[0].point.getY() and min.sites[1].point.getY() <= min.sites[2].point.getY():
         min.type = 0
+        edge = None
+        i = 0
+        while edge == None:
+            if min.sites[0].edges[i] in min.sites[1].edges:
+                edge = min.sites[0].edges[i]
+        min.edges.append(edge)
+
+        edge = None
+        i = 0
+        while edge == None:
+            if min.sites[2].edges[i] in min.sites[1].edges:
+                edge = min.sites[2].edges[i]
+        min.edges.append(edge)
+
+
     elif min.sites[1].point.getY() > min.sites[0].point.getY() and min.sites[1].point.getY() > min.sites[2].point.getY():
         min.type = 1
+
+        edge = None
+        i = 0
+        while edge == None:
+            if min.sites[0].edges[i] in min.sites[2].edges:
+                edge = min.sites[0].edges[i]
+        min.edges.append(edge)
+
+        # L'autre on cherche
+        edge = None
+        i = 0 # A régler
+        while edge == None:
+            if min.sites[1].edges[i] in min.on.edges:
+                edge = min.sites[1].edges[i]
+        min.edges.append(edge)
+
     else:
         min.type = 0
-        print("How to handle this thing?")
+        edge = None
+        i = 0
+        while edge == None:
+            if min.sites[0].edges[i] in min.sites[1].edges:
+                edge = min.sites[0].edges[i]
+        min.edges.append(edge)
+
+        edge = None
+        i = 0
+        while edge == None:
+            if min.sites[2].edges[i] in min.sites[1].edges:
+                edge = min.sites[2].edges[i]
+        min.edges.append(edge)
+
+
+
+
+def getPosCurve(p, x, y):
+    a = p.getY()*p.getY() - y*y
+    b = (2*(y - p.getY()))
+    if b != 0.0:
+        x1 = x + p.getX() - 250
+        h = (p.getX() - x1)*(p.getX() - x1) + a
+        y1 = -h/b
+        return Vector3D(x1, y1)
+    else:
+        return Vector3D(0, 0)
+

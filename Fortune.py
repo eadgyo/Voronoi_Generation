@@ -57,8 +57,13 @@ class Fortune:
 
         if p is not None:
             if p1 is not None and p3 is not None:
+                # On supprime les evenements liés aux anciens points
                 self.removeEvent(p1, p, p3)
+
+            # Création du segment
             createEdge(p, site)
+
+            # AJout des breakpoints
             if p1 is not None:
                 min = findMinCircle(p1, p, site)
                 min.on = p
@@ -80,43 +85,42 @@ class Fortune:
         print("Sites = " + str(vSite.sites[0]) + ", " + str(vSite.sites[1]) + ", " + str(vSite.sites[2]))
         self.rEvents.append(vSite)
 
-        [p1, pi, pk, p2] = self.beachLine.removeFromVSite(vSite)
+        [p1, pi, pk, p2, on] = self.beachLine.removeFromVSite(vSite)
 
         print("remove-> " + str(p1) + ", " + str(pi) + ", " + str(pk) + ", " + str(p2))
         print("=================")
 
         if pi is not None and pk is not None:
-            edge1 = None
-            edge2 = None
+            vSite.edges[0].addPoint(vSite.center)
+            vSite.edges[1].addPoint(vSite.center)
 
-            i = 0
-            while edge1 is None:
-                if vSite.edges[i] in pi.edges:
-                    edge1 = vSite.edges[i]
-                i += 1
-
-            i = 0
-            while edge2 is None:
-                if vSite.edges[i] in pk.edges:
-                    edge2 = vSite.edges[i]
-                i += 1
-
-            edge1.addPoint(vSite.center)
-            edge2.addPoint(vSite.center)
             self.vertex.append(vSite.center)
 
+            # AJout des breakpoints
             if p1 is not None:
+                # On supprime les evenements liés aux anciens points
                 self.removeEvent(p1, pi, vSite)
                 min = findMinCircle(p1, pi, pk)
                 if min.point.getY() > vSite.point.getY():
                     vertexVerif(min)
+
+                    assert(min.type != 1 or vSite.type != 0), "Que faire?"
+                    assert(min.on != None or min.type != 1)
+
+                    min.on = on
                     self.addEvent(min)
 
             if p2 is not None:
+                # On supprime les evenements liés aux anciens points
                 self.removeEvent(vSite, pk, p2)
                 min = findMinCircle(pi, pk, p2)
                 if min.point.getY() > vSite.point.getY():
                     vertexVerif(min)
+
+                    assert(min.type != 1 or vSite.type != 0), "Que faire?"
+                    assert(min.on != None or min.type != 1)
+
+                    min.on = on
                     self.addEvent(min)
         else:
             print("normal?")

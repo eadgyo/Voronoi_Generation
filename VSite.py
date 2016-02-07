@@ -13,3 +13,4 @@ class VSite (Site):
             return str(self.sites[0]) + ", " + str(self.sites[1]) + ", " + str(self.sites[2])
         else:
             return "vSite ??"
+
