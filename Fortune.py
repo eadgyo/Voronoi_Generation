@@ -97,34 +97,34 @@ class Fortune:
             self.vertex.append(vSite.center)
 
             # AJout des breakpoints
-            if p1 is not None:
+            if p1 is not None and (vSite.type == 0 or p1 is not vSite.on):
                 # On supprime les evenements liés aux anciens points
                 self.removeEvent(p1, pi, vSite)
                 min = findMinCircle(p1, pi, pk)
                 if min.point.getY() > vSite.point.getY():
+                    min.on = on
                     vertexVerif(min)
 
                     assert(min.type != 1 or vSite.type != 0), "Que faire?"
-                    assert(min.on != None or min.type != 1)
+                    assert(min.on is not None or min.type != 1)
 
-                    min.on = on
                     self.addEvent(min)
 
-            if p2 is not None:
+            if p2 is not None and (vSite.type == 0 or p2 is not vSite.on):
                 # On supprime les evenements liés aux anciens points
                 self.removeEvent(vSite, pk, p2)
                 min = findMinCircle(pi, pk, p2)
                 if min.point.getY() > vSite.point.getY():
+                    min.on = on
                     vertexVerif(min)
 
                     assert(min.type != 1 or vSite.type != 0), "Que faire?"
-                    assert(min.on != None or min.type != 1)
+                    assert(min.on is not None or min.type != 1)
 
-                    min.on = on
                     self.addEvent(min)
         else:
             print("normal?")
-
+        # Ajouter controle au cas ou cas déjà traité
 
         #removeEvent
 

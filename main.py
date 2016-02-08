@@ -2,6 +2,7 @@ from tkinter import *
 from Fortune import Fortune
 from Vector3D import Vector3D
 from VSite import VSite
+import time
 import math
 """
 def clavier(event):

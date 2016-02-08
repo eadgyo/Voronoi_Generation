@@ -110,16 +110,18 @@ def vertexVerif(min):
         min.type = 0
         edge = None
         i = 0
-        while edge == None:
+        while edge is None:
             if min.sites[0].edges[i] in min.sites[1].edges:
                 edge = min.sites[0].edges[i]
+            i += 1
         min.edges.append(edge)
 
         edge = None
         i = 0
-        while edge == None:
+        while edge is None:
             if min.sites[2].edges[i] in min.sites[1].edges:
                 edge = min.sites[2].edges[i]
+            i += 1
         min.edges.append(edge)
 
 
@@ -128,33 +130,38 @@ def vertexVerif(min):
 
         edge = None
         i = 0
-        while edge == None:
+        while edge is None:
             if min.sites[0].edges[i] in min.sites[2].edges:
                 edge = min.sites[0].edges[i]
+            i += 1
         min.edges.append(edge)
 
         # L'autre on cherche
         edge = None
         i = 0 # A régler
-        while edge == None:
+        while edge is None:
             if min.sites[1].edges[i] in min.on.edges:
                 edge = min.sites[1].edges[i]
+            i += 1
+
         min.edges.append(edge)
 
     else:
         min.type = 0
         edge = None
         i = 0
-        while edge == None:
+        while edge is None:
             if min.sites[0].edges[i] in min.sites[1].edges:
                 edge = min.sites[0].edges[i]
+            i += 1
         min.edges.append(edge)
 
         edge = None
         i = 0
-        while edge == None:
+        while edge is None:
             if min.sites[2].edges[i] in min.sites[1].edges:
                 edge = min.sites[2].edges[i]
+            i += 1
         min.edges.append(edge)
 
 

@@ -30,6 +30,8 @@ class Node:
             return self.right.insert(p0)
 
     def remove(self, p0):
+        if self.site is not None and self.site.name == "p8":
+            pass
         if p0.sites[1] is self.site:
             piN = self.last()
             if piN.site in p0.sites:
