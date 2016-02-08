@@ -51,17 +51,18 @@ class Node:
                     pi = piN.site
                     pk = pkN.site
                     if self.root.left is self:
+                        self.root.right.root = self.root.root
                         if self.root.root.left is self.root:
                             self.root.root.left = self.root.right
                         else:
                             self.root.root.right = self.root.right
-                        self.root.right = self.root.root
                     else:
+                        self.root.left.root = self.root.root
                         if self.root.root.left is self.root:
                             self.root.root.left = self.root.left
                         else:
                             self.root.root.right = self.root.left
-                        self.root.left = self.root.root
+
                     return [p1, pi, pk, p2, notUsed]
 
         if self.isLeaf():

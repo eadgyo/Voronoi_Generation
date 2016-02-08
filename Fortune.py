@@ -47,6 +47,9 @@ class Fortune:
 
     def handleSite(self):
         site = self.events.pop(len(self.events)-1) #SweapLine
+        if site.name == "p5":
+            pass
+
         self.rEvents.append(site)
         [p1, p, p3] = self.beachLine.insert(site) # Here <-----------------------
 
@@ -86,7 +89,8 @@ class Fortune:
         self.rEvents.append(vSite)
 
         [p1, pi, pk, p2, on] = self.beachLine.removeFromVSite(vSite)
-
+        for i in range(len(vSite.sites)):
+            vSite.sites[i].sites.remove(vSite)
         print("remove-> " + str(p1) + ", " + str(pi) + ", " + str(pk) + ", " + str(p2))
         print("=================")
 
@@ -95,6 +99,14 @@ class Fortune:
             vSite.edges[1].addPoint(vSite.center)
 
             self.vertex.append(vSite.center)
+
+            if vSite.type == 0:
+                if not createEdgeIfNot(vSite.sites[0], vSite.sites[2]):
+                    print("Normal?")
+            else:
+                assert(vSite.sites[0] is not vSite.on and vSite.sites[2] is not vSite.on)
+                if not createEdgeIfNot(vSite.sites[0], vSite.sites[2]):
+                    print("Normal?")
 
             # AJout des breakpoints
             if p1 is not None and (vSite.type == 0 or p1 is not vSite.on):
@@ -146,7 +158,10 @@ class Fortune:
         while i < len(p.sites):
             if p.sites[i] in p1.sites:
                 if p.sites[i] in p3.sites:
-                    self.events.remove(p.sites[i])
+                    if p.sites[i] in self.events:
+                        self.events.remove(p.sites[i])
+                    else:
+                        print("Nope")
                     p1.sites.remove(p.sites[i])
                     p3.sites.remove(p.sites[i])
                     p.sites.remove(p.sites[i])

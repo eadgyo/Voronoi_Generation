@@ -32,10 +32,6 @@ def findMinCircle(p1, p2, p3):
     vSite.sites.append(p1)
     vSite.sites.append(p2)
     vSite.sites.append(p3)
-    p1.sites.append(vSite)
-    p2.sites.append(vSite)
-    p3.sites.append(vSite)
-
 
     return vSite
 
@@ -74,11 +70,28 @@ def computeBreakPoint(p1, p2, ly):
         return [Vector3D(xa, ya), Vector3D(xb, yb)]
 
 
-def createEdge(p0, p1):
+def createEdge(p0, p1, pointToAdd = None):
     vec = p1.point - p0.point
+    vec.normalize()
     edge = Edge(Vector3D(-vec.getY(), vec.getX()))
     p0.edges.append(edge)
     p1.edges.append(edge)
+
+    if pointToAdd is not None:
+       edge.addPoint(pointToAdd)
+
+
+def createEdgeIfNot(p0, p1, pointToAdd = None):
+    i = 0
+    while i != -1 and i < len(p0.edges):
+        if p0.edges[i] in p1.edges:
+            i = -2
+        i += 1
+
+    if i != -1:
+        createEdge(p0, p1, pointToAdd)
+        return True
+    return False
 
 
 def vertexVerif(min):
@@ -99,6 +112,10 @@ def vertexVerif(min):
     # -------------------------------------
     # -----------------*-------------------
     # ----------------p2-------------------
+
+    min.sites[0].sites.append(min)
+    min.sites[1].sites.append(min)
+    min.sites[2].sites.append(min)
 
     for i in range(len(min.sites)):
         for j in range(i+1, len(min.sites)):

@@ -11,6 +11,6 @@ class Edge:
         if self.p0 is None:
             self.p0 = p
         else:
-            assert(self.p1 is not None)
+            assert(self.p1 is None)
             self.p1 = p
 
