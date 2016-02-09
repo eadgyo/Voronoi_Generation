@@ -139,7 +139,7 @@ def clavier(event):
             a.draw(canvas)
             draw_Pol(canvas, a, ly[0])
             canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(rE[i]))
-
+    """
     E = fortune.events
     for i in range(len(E)):
         if type(E[i]) == VSite:
@@ -161,6 +161,15 @@ def clavier(event):
             a.setY(E[i].point.getY() * fac.getY())
             a.draw(canvas)
             canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(E[i]))
+    """
+    edgesA = []
+    for i in range(len(fortune.sites)):
+        for j in range(len(fortune.sites[i].edges)):
+            if fortune.sites[i].edges[j] not in edgesA:
+                edgesA.append(fortune.sites[i].edges[j])
+                fortune.sites[i].edges[j].draw(canvas, fac.getX(), fac.getY())
+
+
 
     fortune.beachLine.draw(canvas, 1000, 100, 6)
 

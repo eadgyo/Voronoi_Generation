@@ -201,3 +201,6 @@ class Vector3D:
     def draw(self, screen, color = "black"):
         screen.create_oval(self.getX() - 5, self.getY() - 5, self.getX() + 5, self.getY() + 5, fill=color)
         #screen.create_line(self.getX(), self.getY(), self.getX(), self.getY() + 1)
+
+    def drawF(self, screen, fX, fY, color = "black"):
+        screen.create_oval(self.getX()*fX - 5, self.getY()*fY - 5, self.getX()*fX + 5, self.getY()*fY + 5, fill=color)
