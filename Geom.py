@@ -123,7 +123,8 @@ def vertexVerif(min):
                 min.sites[i], min.sites[j] = min.sites[j], min.sites[i]
 
     # Ajout des edges et set le type
-    if min.sites[1].point.getY() <= min.sites[0].point.getY() and min.sites[1].point.getY() <= min.sites[2].point.getY():
+    if min.sites[1] is min.on: #min.sites[1].point.getY() <= min.sites[0].point.getY() and min.sites[1].point.getY() <= min.sites[2].point.getY():
+
         min.type = 0
         edge = None
         i = 0
@@ -141,8 +142,7 @@ def vertexVerif(min):
             i += 1
         min.edges.append(edge)
 
-
-    elif min.sites[1].point.getY() > min.sites[0].point.getY() and min.sites[1].point.getY() > min.sites[2].point.getY():
+    else: #if min.sites[1].point.getY() > min.sites[0].point.getY() and min.sites[1].point.getY() > min.sites[2].point.getY():
         min.type = 1
 
         edge = None
@@ -162,7 +162,7 @@ def vertexVerif(min):
             i += 1
 
         min.edges.append(edge)
-
+    """
     else:
         min.type = 0
         edge = None
@@ -180,7 +180,7 @@ def vertexVerif(min):
                 edge = min.sites[2].edges[i]
             i += 1
         min.edges.append(edge)
-
+    """
 
 
 
@@ -194,4 +194,3 @@ def getPosCurve(p, x, y):
         return Vector3D(x1, y1)
     else:
         return Vector3D(0, 0)
-

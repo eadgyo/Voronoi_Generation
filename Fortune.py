@@ -70,25 +70,30 @@ class Fortune:
             if p1 is not None:
                 min = findMinCircle(p1, p, site)
                 min.on = p
-                if min.point.getY() > site.point.getY():
+                if self.isValidVertex(min) and min.point.getY() > site.point.getY():
                     vertexVerif(min)
                     self.addEvent(min)
 
             if p3 is not None:
                 min = findMinCircle(p3, p, site)
                 min.on = p
-                if min.point.getY() > site.point.getY():
+                if self.isValidVertex(min) and min.point.getY() > site.point.getY():
                     vertexVerif(min)
                     self.addEvent(min)
 
     def handleVertex(self):
         vSite = self.events.pop(len(self.events)-1)
+        on = None
+        if vSite.type == 1:
+            on = vSite.sites[0] if vSite.sites[0] is not vSite.on else vSite.sites[2]
+
+
 
         print("=== Vertex Ev ===")
         print("Sites = " + str(vSite.sites[0]) + ", " + str(vSite.sites[1]) + ", " + str(vSite.sites[2]))
         self.rEvents.append(vSite)
 
-        [p1, pi, pk, p2, on] = self.beachLine.removeFromVSite(vSite)
+        [p1, pi, pk, p2, on2] = self.beachLine.removeFromVSite(vSite)
         for i in range(len(vSite.sites)):
             vSite.sites[i].sites.remove(vSite)
         print("remove-> " + str(p1) + ", " + str(pi) + ", " + str(pk) + ", " + str(p2))
@@ -109,11 +114,13 @@ class Fortune:
                     print("Normal?")
 
             # AJout des breakpoints
-            if p1 is not None and (vSite.type == 0 or p1 is not vSite.on):
+            if p1 is not None and (p1 is not vSite.on):
                 # On supprime les evenements liés aux anciens points
                 self.removeEvent(p1, pi, vSite)
                 min = findMinCircle(p1, pi, pk)
-                if min.point.getY() > vSite.point.getY():
+                if self.isValidVertex(min) and min.point.getY() > vSite.point.getY():
+                    if vSite.type == 0:
+                        pass
                     min.on = on
                     vertexVerif(min)
 
@@ -122,12 +129,15 @@ class Fortune:
 
                     self.addEvent(min)
 
-            if p2 is not None and (vSite.type == 0 or p2 is not vSite.on):
+            if p2 is not None and (p2 is not vSite.on):
                 # On supprime les evenements liés aux anciens points
                 self.removeEvent(vSite, pk, p2)
                 min = findMinCircle(pi, pk, p2)
-                if min.point.getY() > vSite.point.getY():
+                if self.isValidVertex(min) and min.point.getY() > vSite.point.getY():
                     min.on = on
+                    if vSite.type == 0:
+                        pass
+
                     vertexVerif(min)
 
                     assert(min.type != 1 or vSite.type != 0), "Que faire?"
@@ -146,6 +156,9 @@ class Fortune:
             if site.point.getY() < self.events[i].point.getY():
                 break
             i -= 1
+
+        if len(site.sites) == 1:
+            pass
 
         # test
         for x in range(len(self.events)-1):
@@ -168,3 +181,14 @@ class Fortune:
                     i -= 1
             i += 1
 
+    def isValidVertex(self, vSite):
+        radius = (vSite.center - vSite.point).getMagnitude()
+        i = len(self.sites) - 1
+        while i > -1 and vSite.point.getY() >= self.sites[i].point.getY():
+            if self.sites[i] not in vSite.sites:
+                vec = vSite.center - self.sites[i].point
+                if vec.getMagnitude() < radius:
+
+                    return False
+            i -= 1
+        return True
