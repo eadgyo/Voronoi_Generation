@@ -120,7 +120,8 @@ class Fortune:
                 min = findMinCircle(p1, pi, pk)
                 if self.isValidVertex(min) and min.point.getY() > vSite.point.getY():
                     if vSite.type == 0:
-                        pass
+                        on = pi
+                        print("Possible Error")
                     min.on = on
                     vertexVerif(min)
 
@@ -134,9 +135,10 @@ class Fortune:
                 self.removeEvent(vSite, pk, p2)
                 min = findMinCircle(pi, pk, p2)
                 if self.isValidVertex(min) and min.point.getY() > vSite.point.getY():
-                    min.on = on
                     if vSite.type == 0:
-                        pass
+                        on = pk
+                        print("Possible Error")
+                    min.on = on
 
                     vertexVerif(min)
 

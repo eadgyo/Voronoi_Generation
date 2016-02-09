@@ -20,7 +20,11 @@ def findMinCircle(p1, p2, p3):
     e = (x1 - x3)
 
     # Determine Center
-    x = ((2*a*f/d) + h)/(b*(1-(4*a*e/(d*b))))
+    x = 0
+    if (1-(4*a*e/(d*b))) != 0.0:
+        x = ((2*a*f/d) + h)/(b*(1-(4*a*e/(d*b))))
+
+
     y = (2*x*e + f)/d
 
     center = Vector3D(x, y)

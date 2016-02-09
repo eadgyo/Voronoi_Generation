@@ -191,7 +191,7 @@ if __name__ == "__main__":
     vec.append(Vector3D(3, 3))
     vec.append(Vector3D(4.2, 4))
     vec.append(Vector3D(5.2, 5))
-    vec.append(Vector3D(3, 5.2))
+    vec.append(Vector3D(3.1, 5.2))
     vec.append(Vector3D(1, 6))
     vec.append(Vector3D(3, 7.2))
     vec.append(Vector3D(5.4, 7))
