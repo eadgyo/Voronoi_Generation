@@ -37,14 +37,6 @@ class Node:
             if piN.site in p0.sites:
                 pkN = self.next()
                 if pkN.site in p0.sites:
-                    sites = p0.copySites()
-                    sites.remove(piN.site)
-                    sites.remove(p0.sites[1])
-                    sites.remove(pkN.site)
-                    notUsed = None
-                    if len(sites) != 0:
-                        assert(len(sites) == 1)
-                        notUsed = sites[0]
 
                     p1 = piN.lastSite()
                     p2 = pkN.nextSite()
@@ -63,7 +55,7 @@ class Node:
                         else:
                             self.root.root.right = self.root.left
 
-                    return [p1, pi, pk, p2, notUsed]
+                    return [p1, pi, pk, p2]
 
         if self.isLeaf():
             #assert(False), "No site found"
