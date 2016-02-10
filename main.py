@@ -64,13 +64,22 @@ def clavier(event):
             a.draw(canvas)
             canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(E[i]))
     """
-    edgesA = []
+
+    edges = fortune.edges
+    for i in range(len(edges)):
+        edges[i].draw(canvas, fac.getX(), fac.getY())
+        if edges[i].p1 is not None:
+            print("A")
+        if edges[i].p0 is not None:
+            print("A")
+
+    """
     for i in range(len(fortune.sites)):
         for j in range(len(fortune.sites[i].edges)):
             if fortune.sites[i].edges[j] not in edgesA:
                 edgesA.append(fortune.sites[i].edges[j])
                 fortune.sites[i].edges[j].draw(canvas, fac.getX(), fac.getY())
-
+    """
 
 
     fortune.beachLine.draw(canvas, 1000, 100, 6)

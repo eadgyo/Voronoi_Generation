@@ -13,6 +13,7 @@ class Fortune:
         self.beachLine = BeachLine()
         self.vertex = []
         self.rEvents = []
+        self.edges = []
         # Sort Y
         for i in range(len(self.points)):
             for j in range(i+1, len(self.points)):
@@ -42,12 +43,12 @@ class Fortune:
             self.beachLine.update(self.events[len(self.events)-1].point.getY())
 
     def handleSite(self):
-        site = self.events.pop(len(self.events)-1) #SweapLine
+        site = self.events.pop(len(self.events)-1)  # SweapLine
         if site.name == "p5":
             pass
 
         self.rEvents.append(site)
-        [p1, p, p3] = self.beachLine.insert(site) # Here <-----------------------
+        [p1, p, p3] = self.beachLine.insert(site, self.edges)
 
         """print("=== Site Ev ===")
         print("Site = " + str(site))
@@ -60,7 +61,7 @@ class Fortune:
                 self.removeEvent(p1, p, p3)
 
             # Création du segment
-            createEdge(p, site)
+            # createEdge(p, site)
 
             # AJout des breakpoints
             if p1 is not None:
@@ -83,8 +84,6 @@ class Fortune:
         if vSite.type == 1:
             on = vSite.sites[0] if vSite.sites[0] is not vSite.on else vSite.sites[2]
 
-
-
         """print("=== Vertex Ev ===")
         print("Sites = " + str(vSite.sites[0]) + ", " + str(vSite.sites[1]) + ", " + str(vSite.sites[2]))
         """
@@ -97,11 +96,12 @@ class Fortune:
         print("=================")"""
 
         if pi is not None and pk is not None:
-            vSite.edges[0].addPoint(vSite.center)
-            vSite.edges[1].addPoint(vSite.center)
+            #vSite.edges[0].addPoint(vSite.center)
+            #vSite.edges[1].addPoint(vSite.center)
 
-            self.vertex.append(vSite.center)
+            #self.vertex.append(vSite.center)
 
+            """
             if vSite.type == 0:
                 if not createEdgeIfNot(vSite.sites[0], vSite.sites[2]):
                     print("Normal?")
@@ -109,6 +109,7 @@ class Fortune:
                 assert(vSite.sites[0] is not vSite.on and vSite.sites[2] is not vSite.on)
                 if not createEdgeIfNot(vSite.sites[0], vSite.sites[2]):
                     print("Normal?")
+            """
 
             # AJout des breakpoints
             if p1 is not None and (p1 is not vSite.on):

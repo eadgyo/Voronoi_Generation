@@ -16,8 +16,16 @@ class Edge:
             assert(self.p1 is None)
             self.p1 = p
 
+    def set(self, p, i):
+        if i:
+            self.p1 = p
+        else:
+            self.p0 = p
+
     def draw(self, screen, fX = 1.0, fY = 1.0):
         if self.p0 is not None and self.p1 is not None:
             screen.create_line(self.p0.getX() * fX, self.p0.getY() * fY, self.p1.getX() * fX, self.p1.getY() * fY)
         if self.p0 is not None:
             self.p0.drawF(screen, fX, fY, "Red")
+        if self.p1 is not None:
+            self.p1.drawF(screen, fX, fY, "Red")

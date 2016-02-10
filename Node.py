@@ -1,13 +1,15 @@
 from Geom import *
 from tkinter import Tk, Canvas, Frame, BOTH, W
 class Node:
-    def __init__(self, site = None):
+    def __init__(self, site=None, edge=None, p=0):
         self.site = site
         self.left = None
         self.right = None
         self.value = 0
         self.stop = False
         self.root = None
+        self.edge = edge
+        self.p = p
 
     def copy(self):
         copy = Node(self.site)
@@ -17,17 +19,17 @@ class Node:
         copy.stop = self.stop
         copy.root = self.root
 
-    def insert(self, p0):
+    def insert(self, p0, edges):
         if self.isLeaf():
             p = self.site
             p1 = self.lastSite()
             p3 = self.nextSite()
-            self.split(p0)
+            self.split(p0, edges)
             return [p1, p, p3]
         elif self.value > p0.point.getX():
-            return self.left.insert(p0)
+            return self.left.insert(p0, edges)
         else:
-            return self.right.insert(p0)
+            return self.right.insert(p0, edges)
 
     def remove(self, p0):
         if self.site is not None and self.site.name == "p8":
@@ -37,24 +39,11 @@ class Node:
             if piN.site in p0.sites:
                 pkN = self.next()
                 if pkN.site in p0.sites:
-
                     p1 = piN.lastSite()
                     p2 = pkN.nextSite()
                     pi = piN.site
                     pk = pkN.site
-                    if self.root.left is self:
-                        self.root.right.root = self.root.root
-                        if self.root.root.left is self.root:
-                            self.root.root.left = self.root.right
-                        else:
-                            self.root.root.right = self.root.right
-                    else:
-                        self.root.left.root = self.root.root
-                        if self.root.root.left is self.root:
-                            self.root.root.left = self.root.left
-                        else:
-                            self.root.root.right = self.root.left
-
+                    self.eraseNode(p0)
                     return [p1, pi, pk, p2]
 
         if self.isLeaf():
@@ -88,7 +77,6 @@ class Node:
             self.left.update(ly)
         if not self.right.isLeaf():
             self.right.update(ly)
-
 
     def isLeaf(self):
         return self.left is None and self.right is None
@@ -149,8 +137,17 @@ class Node:
         else:
             return self.root.findRootLeft()
 
-    def split(self, p):
+    def split(self, p, edges):
+        self.edge = createEdge(p, self.site)
+        edges.append(self.edge)
+        if self.root is not None:
+            self.edge.prec.append(self.root.edge)
+            self.root.edge.next.append(self.edge)
+        self.p = 0
+
         self.right = Node()
+        self.right.edge = self.edge
+        self.right.p = 1
         self.right.left = Node(p)
         self.right.right = Node(self.site)
         self.left = Node(self.site)
@@ -165,6 +162,21 @@ class Node:
         # Set values
         self.value = p.point.getY()
         self.right.value = p.point.getY()
+
+    def eraseNode(self, p0):
+        self.root.edge.set(p0.center, self.root.p)
+        if self.root.left is self:
+            self.root.right.root = self.root.root
+            if self.root.root.left is self.root:
+                self.root.root.left = self.root.right
+            else:
+                self.root.root.right = self.root.right
+        else:
+            self.root.left.root = self.root.root
+            if self.root.root.left is self.root:
+                self.root.root.left = self.root.left
+            else:
+                self.root.root.right = self.root.left
 
     def deep(self):
         a = 1

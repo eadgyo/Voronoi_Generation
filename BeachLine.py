@@ -6,12 +6,12 @@ class BeachLine:
     def __init__(self):
         self.root = None
 
-    def insert(self, p0):
+    def insert(self, p0, edges):
         if self.root is None:
             self.root = Node(p0)
             return [None, None, None]
         else:
-            return self.root.insert(p0)
+            return self.root.insert(p0, edges)
 
     def update(self, ly):
         if self.root is None or self.root.isLeaf():
