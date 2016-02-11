@@ -185,12 +185,19 @@ class Node:
         # On créer un nouveau edge pour remplacer l'edge du second root
         # Ce nouvel edge démarre du point centre
 
-        self.root.edge.set(p0.center, self.root.p)
         toModify = piN[1]
         if self.root is toModify:
             toModify = pkN[1]
+
+        self.root.edge.set(p0.center, self.root.p)
+        self.root.edge.prec.append(toModify.edge)
+        toModify.edge.next.append(self.root.edge)
         toModify.edge.set(p0.center, toModify.p)
+        lastEdge = toModify.edge
+
         toModify.edge = createEdge(piN[0].site, pkN[0].site)
+        toModify.edge.prec.append(lastEdge)
+        lastEdge.next.append(lastEdge)
         toModify.edge.set(p0.center, 0)
         toModify.p = 1
         edges.append(toModify.edge)

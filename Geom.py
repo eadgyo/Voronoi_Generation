@@ -77,6 +77,7 @@ def computeBreakPoint(p1, p2, ly):
 def createEdge(p0, p1, pointToAdd = None):
     vec = p1.point - p0.point
     vec.normalize()
+
     edge = Edge(Vector3D(-vec.getY(), vec.getX()))
     p0.edges.append(edge)
     p1.edges.append(edge)

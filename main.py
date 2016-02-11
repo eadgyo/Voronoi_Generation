@@ -109,7 +109,7 @@ if __name__ == "__main__":
     vec.append(Vector3D(5.2, 5))
     vec.append(Vector3D(3.1, 5.2))
     vec.append(Vector3D(1, 6))
-    vec.append(Vector3D(3, 7.2))
+    vec.append(Vector3D(3, 8.2))
     vec.append(Vector3D(5.4, 7))
 
 
