@@ -6,7 +6,7 @@ from Vector3D import Vector3D
 import math
 
 class Fortune:
-    def __init__(self, points):
+    def __init__(self, points, step = False):
         self.points = points
         self.sites = []
         self.events = []
@@ -26,15 +26,20 @@ class Fortune:
             site.name = "p" + str(i)
             self.sites.append(site)
             self.events.append(site)
-
-        #self.create()
+        if not step:
+            self.create()
 
     def create(self):
-        if len(self.events) != 0:
-            if len(self.events) == 4:
-                pass
+        while len(self.events) != 0:
             self.beachLine.update(self.events[len(self.events)-1].point.getY())
+            if type(self.events[len(self.events)-1]) == VSite:
+                self.handleVertex()
+            else:
+                self.handleSite()
 
+    def createStep(self):
+        if len(self.events) != 0:
+            self.beachLine.update(self.events[len(self.events)-1].point.getY())
             if type(self.events[len(self.events)-1]) == VSite:
                 self.handleVertex()
             else:

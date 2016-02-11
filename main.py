@@ -14,7 +14,8 @@ def clavier(event):
     if (ly[0]+ 10)/fac.getY()  >= fortune.events[len(fortune.events) - 1].point.getY():
         ly[0] = fortune.events[len(fortune.events) - 1].point.getY()*fac.getY()
         before = fortune.beachLine.array()
-        fortune.create()
+        fortune.createStep()
+
         """
         print("--- Array ---")
         print(before)
@@ -118,7 +119,7 @@ if __name__ == "__main__":
 
 
     canvas.focus_set()
-    fortune = Fortune(vec)
+    fortune = Fortune(vec, True)
     canvas.bind("<Key>", clavier)
 
     canvas.pack()
