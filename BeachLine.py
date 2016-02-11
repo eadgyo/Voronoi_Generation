@@ -18,27 +18,22 @@ class BeachLine:
             return
         self.root.update(ly)
 
-    def remove(self, p0):
+    def remove(self, p0, edges):
         assert(self.root is not None)
-        a = self.root.remove(p0)
+        a = self.root.remove(p0, edges)
         assert(a is not None)
         return a
 
-    def removeFromVSite(self, vSite):
-        p = vSite.sites
-        for i in range(len(p)):
-            for j in range(i+1, len(p)):
-                if p[i].point.getX() > p[j].point.getX():
-                    assert(False)
+    def removeFromVSite(self, vSite, edges):
         if vSite.type == 1:
             i = 0
             while vSite.sites[i] is not vSite.on:
-                i+=1
+                i += 1
             assert(i != 1)
             vSite.sites[i] = vSite.sites[1]
             vSite.sites[1] = vSite.on
 
-        return self.remove(vSite)
+        return self.remove(vSite, edges)
 
     def draw(self, screen, x, y, sizeD):
         if self.root is not None:

@@ -22,10 +22,33 @@ class Edge:
         else:
             self.p0 = p
 
-    def draw(self, screen, fX = 1.0, fY = 1.0):
+    def draw(self, screen, fX = 1.0, fY = 1.0, maxX = 10, maxY = 10):
         if self.p0 is not None and self.p1 is not None:
             screen.create_line(self.p0.getX() * fX, self.p0.getY() * fY, self.p1.getX() * fX, self.p1.getY() * fY)
         if self.p0 is not None:
             self.p0.drawF(screen, fX, fY, "Red")
+        elif self.p1 is not None:
+            if self.vec.getY() > self.vec.getX():
+                if self.p1.getY() > 0:
+                    fac = self.p1.getY()/self.vec.getY()
+                    x = self.p1.getX() + fac*self.vec.getX()
+                    screen.create_line(self.p1.getX() * fX, self.p1.getY() * fY, x * fX, 0.0)
+            else:
+                if self.p1.getX() > 0:
+                    fac = self.p1.getX()/self.vec.getX()
+                    y = self.p1.getY() + fac*self.vec.getY()
+                    screen.create_line(self.p1.getX() * fX, self.p1.getY() * fY, 0.0, y * fY)
+
         if self.p1 is not None:
             self.p1.drawF(screen, fX, fY, "Red")
+        elif self.p0 is not None:
+            if self.vec.getY() > self.vec.getX():
+                if self.p0.getY() < maxY:
+                    fac = (maxY - self.p0.getY())/self.vec.getY()
+                    x = self.p0.getX() + fac*self.vec.getX()
+                    screen.create_line(self.p0.getX() * fX, self.p0.getY() * fY, x * fX, maxY)
+            else:
+                if self.p0.getX() < maxX:
+                    fac = (maxX - self.p0.getX())/self.vec.getX()
+                    y = self.p0.getY() + fac*self.vec.getY()
+                    screen.create_line(self.p0.getX() * fX, self.p0.getY() * fY, maxX, y * fY)

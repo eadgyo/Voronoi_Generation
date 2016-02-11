@@ -89,7 +89,7 @@ class Fortune:
         """
         self.rEvents.append(vSite)
 
-        [p1, pi, pk, p2] = self.beachLine.removeFromVSite(vSite)
+        [p1, pi, pk, p2] = self.beachLine.removeFromVSite(vSite, self.edges)
         for i in range(len(vSite.sites)):
             vSite.sites[i].sites.remove(vSite)
         """print("remove-> " + str(p1) + ", " + str(pi) + ", " + str(pk) + ", " + str(p2))

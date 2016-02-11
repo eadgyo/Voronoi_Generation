@@ -31,28 +31,26 @@ class Node:
         else:
             return self.right.insert(p0, edges)
 
-    def remove(self, p0):
-        if self.site is not None and self.site.name == "p8":
-            pass
-        if p0.sites[1] is self.site:
-            piN = self.last()
-            if piN.site in p0.sites:
-                pkN = self.next()
-                if pkN.site in p0.sites:
-                    p1 = piN.lastSite()
-                    p2 = pkN.nextSite()
-                    pi = piN.site
-                    pk = pkN.site
-                    self.eraseNode(p0)
+    def remove(self, p0, edges):
+        if p0.on is self.site:
+            piN = self.fullLast()
+            if piN[0].site in p0.sites:
+                pkN = self.fullNext()
+                if pkN[0].site in p0.sites:
+                    p1 = piN[0].lastSite()
+                    p2 = pkN[0].nextSite()
+                    pi = piN[0].site
+                    pk = pkN[0].site
+                    self.eraseNode(p0, piN, pkN, edges)
                     return [p1, pi, pk, p2]
 
         if self.isLeaf():
             #assert(False), "No site found"
             return None
         else:
-            l = self.left.remove(p0)
+            l = self.left.remove(p0, edges)
             if l is None:
-                return self.right.remove(p0)
+                return self.right.remove(p0, edges)
             else:
                 return l
 
@@ -80,6 +78,20 @@ class Node:
 
     def isLeaf(self):
         return self.left is None and self.right is None
+
+    def fullNext(self):
+        root = self.findRootRight()
+        if root is None:
+            return [None, None]
+        else:
+            return [root.right.low(), root]
+
+    def fullLast(self):
+        root = self.findRootLeft()
+        if root is None:
+            return [None, None]
+        else:
+            return [root.left.max(), root]
 
     def next(self):
         root = self.findRootRight()
@@ -138,6 +150,10 @@ class Node:
             return self.root.findRootLeft()
 
     def split(self, p, edges):
+        # Création d'un nouveau edge
+        # Les points sont ordonnés selon X
+        # Donc le node actuel a le premier point et le node à droite le second
+
         self.edge = createEdge(p, self.site)
         edges.append(self.edge)
         if self.root is not None:
@@ -163,8 +179,22 @@ class Node:
         self.value = p.point.getY()
         self.right.value = p.point.getY()
 
-    def eraseNode(self, p0):
+    def eraseNode(self, p0, piN, pkN, edges):
+        # On ajoute le point centre au root edge et au second root node
+        # On retire l'edge du node root
+        # On créer un nouveau edge pour remplacer l'edge du second root
+        # Ce nouvel edge démarre du point centre
+
         self.root.edge.set(p0.center, self.root.p)
+        toModify = piN[1]
+        if self.root is toModify:
+            toModify = pkN[1]
+        toModify.edge.set(p0.center, toModify.p)
+        toModify.edge = createEdge(piN[0].site, pkN[0].site)
+        toModify.edge.set(p0.center, 0)
+        toModify.p = 1
+        edges.append(toModify.edge)
+
         if self.root.left is self:
             self.root.right.root = self.root.root
             if self.root.root.left is self.root:

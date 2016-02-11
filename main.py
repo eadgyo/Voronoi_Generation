@@ -67,11 +67,7 @@ def clavier(event):
 
     edges = fortune.edges
     for i in range(len(edges)):
-        edges[i].draw(canvas, fac.getX(), fac.getY())
-        if edges[i].p1 is not None:
-            print("A")
-        if edges[i].p0 is not None:
-            print("A")
+        edges[i].draw(canvas, fac.getX(), fac.getY(), 20, 20)
 
     """
     for i in range(len(fortune.sites)):
@@ -108,7 +104,7 @@ if __name__ == "__main__":
     vec.append(Vector3D(2, 1))
     vec.append(Vector3D(4, 1.1))
     vec.append(Vector3D(5, 2.7))
-    vec.append(Vector3D(3, 3))
+    vec.append(Vector3D(3.2, 3))
     vec.append(Vector3D(4.2, 4))
     vec.append(Vector3D(5.2, 5))
     vec.append(Vector3D(3.1, 5.2))
