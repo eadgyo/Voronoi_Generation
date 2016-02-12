@@ -40,7 +40,7 @@ def clavier(event):
             a.setX(rE[i].point.getX() * fac.getX())
             a.setY(rE[i].point.getY() * fac.getY())
             a.draw(canvas)
-            draw_Pol(canvas, a, ly[0])
+            #draw_Pol(canvas, a, ly[0])
             canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(rE[i]))
     """
     E = fortune.events
