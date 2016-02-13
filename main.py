@@ -103,13 +103,13 @@ if __name__ == "__main__":
 
     vec = []
     vec.append(Vector3D(2, 1))
-    vec.append(Vector3D(4, 1.001))
+    vec.append(Vector3D(4, 1))
     vec.append(Vector3D(5, 2.7))
     vec.append(Vector3D(3.2, 3))
     vec.append(Vector3D(4.2, 4))
     vec.append(Vector3D(5.2, 5))
-    vec.append(Vector3D(3.1, 5.2))
-    vec.append(Vector3D(1, 6))
+    vec.append(Vector3D(3.1, 5))
+    vec.append(Vector3D(1, 5))
     vec.append(Vector3D(3, 8.2))
     vec.append(Vector3D(5.4, 7))
 

@@ -124,7 +124,7 @@ class Fortune:
                 if self.isValidVertex(min) and min.point.getY() >= vSite.point.getY():
                     if vSite.type == 0:
                         on = pi
-                        print("Possible Error")
+
                     min.on = on
                     vertexVerif(min)
 
@@ -140,7 +140,6 @@ class Fortune:
                 if self.isValidVertex(min) and min.point.getY() >= vSite.point.getY():
                     if vSite.type == 0:
                         on = pk
-                        print("Possible Error")
                     min.on = on
 
                     vertexVerif(min)

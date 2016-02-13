@@ -63,6 +63,8 @@ def computeBreakPoint(p1, p2, ly):
     if isNull(b):
         if isNull(e):
             return []
+        if isNull(a):
+            return []
         x = -c/a
         y = (-x*x + 2*x*x1 - h)/e
         return [Vector3D(x, y)]
@@ -136,11 +138,6 @@ def vertexVerif(min):
     min.sites[0].sites.append(min)
     min.sites[1].sites.append(min)
     min.sites[2].sites.append(min)
-
-    for i in range(len(min.sites)):
-        for j in range(i+1, len(min.sites)):
-            if min.sites[i].point.getX() > min.sites[j].point.getX():
-                min.sites[i], min.sites[j] = min.sites[j], min.sites[i]
 
     # Ajout des edges et set le type
     if min.sites[1] is min.on:  # min.sites[1].point.getY() <= min.sites[0].point.getY() and min.sites[1].point.getY() <= min.sites[2].point.getY():

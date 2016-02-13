@@ -67,9 +67,9 @@ class Node:
         else:
             assert(len(breakpoints) != 0)
             c = breakpoints[0]"""
-        assert(len(breakpoints) != 0)
-        c = breakpoints[0]
-        self.value = c.getX()
+        if len(breakpoints) != 0:
+            c = breakpoints[0]
+            self.value = c.getX()
 
         if not self.left.isLeaf():
             self.left.update(ly)
@@ -159,19 +159,34 @@ class Node:
         if self.root is not None:
             self.edge.prec.append(self.root.edge)
             self.root.edge.next.append(self.edge)
-        self.p = 0
 
-        self.right = Node()
-        self.right.edge = self.edge
-        self.right.p = 1
-        self.right.left = Node(p)
-        self.right.right = Node(self.site)
-        self.left = Node(self.site)
 
-        self.left.root = self
-        self.right.root = self
-        self.right.left.root = self.right
-        self.right.right.root = self.right
+        if isNull(p.point.getY() - self.site.point.getY()):
+            self.p = 1
+            if p.point.getX() > self.site.point.getX():
+                self.right = Node(p)
+                self.left = Node(self.site)
+            else:
+                self.right = Node(self.site)
+                self.left = Node(p)
+
+            self.left.root = self
+            self.right.root = self
+        else:
+            self.p = 0
+            self.right = Node()
+            self.right.edge = self.edge
+            self.right.p = 1
+            self.right.left = Node(p)
+
+            self.right.right = Node(self.site)
+
+            self.left = Node(self.site)
+
+            self.left.root = self
+            self.right.root = self
+            self.right.left.root = self.right
+            self.right.right.root = self.right
 
         self.site = None
 
