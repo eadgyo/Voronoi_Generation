@@ -34,9 +34,9 @@ class Node:
     def remove(self, p0, edges):
         if p0.on is self.site:
             piN = self.fullLast()
-            if piN[0].site in p0.sites:
+            if piN[0] is not None and piN[0].site in p0.sites:
                 pkN = self.fullNext()
-                if pkN[0].site in p0.sites:
+                if pkN[0] is not None and pkN[0].site in p0.sites:
                     p1 = piN[0].lastSite()
                     p2 = pkN[0].nextSite()
                     pi = piN[0].site

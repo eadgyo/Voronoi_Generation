@@ -40,9 +40,9 @@ def clavier(event):
             a.setX(rE[i].point.getX() * fac.getX())
             a.setY(rE[i].point.getY() * fac.getY())
             a.draw(canvas)
-            #draw_Pol(canvas, a, ly[0])
+            draw_Pol(canvas, a, ly[0])
             canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(rE[i]))
-    """
+
     E = fortune.events
     for i in range(len(E)):
         if type(E[i]) == VSite:
@@ -64,7 +64,7 @@ def clavier(event):
             a.setY(E[i].point.getY() * fac.getY())
             a.draw(canvas)
             canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(E[i]))
-    """
+
 
     edges = fortune.edges
     for i in range(len(edges)):
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
     vec = []
     vec.append(Vector3D(2, 1))
-    vec.append(Vector3D(4, 1.1))
+    vec.append(Vector3D(4, 1.001))
     vec.append(Vector3D(5, 2.7))
     vec.append(Vector3D(3.2, 3))
     vec.append(Vector3D(4.2, 4))

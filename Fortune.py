@@ -71,15 +71,15 @@ class Fortune:
             # AJout des breakpoints
             if p1 is not None:
                 min = findMinCircle(p1, p, site)
-                min.on = p
-                if self.isValidVertex(min) and min.point.getY() > site.point.getY():
+                if self.isValidVertex(min) and min.point.getY() >= site.point.getY():
+                    min.on = p
                     vertexVerif(min)
                     self.addEvent(min)
 
             if p3 is not None:
                 min = findMinCircle(p3, p, site)
-                min.on = p
-                if self.isValidVertex(min) and min.point.getY() > site.point.getY():
+                if self.isValidVertex(min) and min.point.getY() >= site.point.getY():
+                    min.on = p
                     vertexVerif(min)
                     self.addEvent(min)
 
@@ -121,7 +121,7 @@ class Fortune:
                 # On supprime les evenements liés aux anciens points
                 self.removeEvent(p1, pi, vSite)
                 min = findMinCircle(p1, pi, pk)
-                if self.isValidVertex(min) and min.point.getY() > vSite.point.getY():
+                if self.isValidVertex(min) and min.point.getY() >= vSite.point.getY():
                     if vSite.type == 0:
                         on = pi
                         print("Possible Error")
@@ -137,7 +137,7 @@ class Fortune:
                 # On supprime les evenements liés aux anciens points
                 self.removeEvent(vSite, pk, p2)
                 min = findMinCircle(pi, pk, p2)
-                if self.isValidVertex(min) and min.point.getY() > vSite.point.getY():
+                if self.isValidVertex(min) and min.point.getY() >= vSite.point.getY():
                     if vSite.type == 0:
                         on = pk
                         print("Possible Error")
@@ -187,6 +187,8 @@ class Fortune:
             i += 1
 
     def isValidVertex(self, vSite):
+        if vSite is None:
+            return False
         radius = (vSite.center - vSite.point).getMagnitude()
         i = len(self.sites) - 1
         while i > -1 and vSite.point.getY() >= self.sites[i].point.getY():
