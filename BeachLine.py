@@ -21,6 +21,8 @@ class BeachLine:
     def remove(self, p0, edges):
         assert(self.root is not None)
         a = self.root.remove(p0, edges)
+        if a is None:
+            pass
         assert(a is not None)
         return a
 

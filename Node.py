@@ -155,11 +155,13 @@ class Node:
         # Donc le node actuel a le premier point et le node à droite le second
 
         self.edge = createEdge(p, self.site)
+
         edges.append(self.edge)
+        """
         if self.root is not None:
             self.edge.prec.append(self.root.edge)
             self.root.edge.next.append(self.edge)
-
+        """
 
         if isNull(p.point.getY() - self.site.point.getY()):
             self.p = 1
@@ -204,18 +206,33 @@ class Node:
         if self.root is toModify:
             toModify = pkN[1]
 
-        self.root.edge.set(p0.center, self.root.p)
-        self.root.edge.prec.append(toModify.edge)
-        toModify.edge.next.append(self.root.edge)
-        toModify.edge.set(p0.center, toModify.p)
+        self.root.edge.test()
+        toModify.edge.test()
+
+        self.root.edge.set(p0, self.root.p)
+        #self.root.edge.prec.append(toModify.edge)
+        self.root.edge.add(toModify.edge, self.root.p)
+        #toModify.edge.next.append(self.root.edge)
+        toModify.edge.add(self.root.edge, toModify.p)
+        toModify.edge.set(p0, toModify.p)
+        tP = toModify.p
         lastEdge = toModify.edge
 
+        self.root.edge.test()
+        toModify.edge.test()
+
         toModify.edge = createEdge(piN[0].site, pkN[0].site)
-        toModify.edge.prec.append(lastEdge)
-        lastEdge.next.append(lastEdge)
-        toModify.edge.set(p0.center, 0)
+        #toModify.edge.prec.append(lastEdge)
+        toModify.edge.add(lastEdge, 0)
+        lastEdge.add(toModify.edge, tP)
+        toModify.edge.set(p0, 0)
         toModify.p = 1
         edges.append(toModify.edge)
+
+
+        lastEdge.test()
+        self.root.edge.test()
+        toModify.edge.test()
 
         if self.root.left is self:
             self.root.right.root = self.root.root

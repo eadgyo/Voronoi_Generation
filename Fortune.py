@@ -7,7 +7,13 @@ import math
 
 class Fortune:
     def __init__(self, points, step = False):
-        self.points = points
+        self.init(points, step)
+
+    def init(self, points, step):
+        self.points = []
+        for i in points:
+            self.points.append(i.copy())
+
         self.sites = []
         self.events = []
         self.beachLine = BeachLine()
@@ -19,6 +25,9 @@ class Fortune:
             for j in range(i+1, len(self.points)):
                 if self.points[i].getY() < self.points[j].getY():
                     self.points[i], self.points[j] = self.points[j], self.points[i]
+                elif self.points[i].getY() == self.points[j].getY():
+                    if self.points[i].getX() < self.points[j].getX():
+                        self.points[i], self.points[j] = self.points[j], self.points[i]
 
         # Convert points into sites and create events
         for i in range(len(self.points)):
@@ -28,6 +37,7 @@ class Fortune:
             self.events.append(site)
         if not step:
             self.create()
+
 
     def create(self):
         while len(self.events) != 0:
@@ -44,8 +54,8 @@ class Fortune:
                 self.handleVertex()
             else:
                 self.handleSite()
-
-            self.beachLine.update(self.events[len(self.events)-1].point.getY())
+            if len(self.events) > 0:
+                self.beachLine.update(self.events[len(self.events)-1].point.getY())
 
     def handleSite(self):
         site = self.events.pop(len(self.events)-1)  # SweapLine
@@ -179,9 +189,14 @@ class Fortune:
                         self.events.remove(p.sites[i])
                     else:
                         print("Nope")
+
+
                     p1.sites.remove(p.sites[i])
-                    p3.sites.remove(p.sites[i])
-                    p.sites.remove(p.sites[i])
+
+                    if p3 is not p1:
+                        p3.sites.remove(p.sites[i])
+                    if p is not p1 and p is not p3:
+                        p.sites.remove(p.sites[i])
                     i -= 1
             i += 1
 
