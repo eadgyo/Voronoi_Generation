@@ -84,7 +84,18 @@ class Fortune:
 
             if p1 is p3:
                 min = findMinCircle(p1, p, site)
-                computeBreakPoint(p1, p, min.point.getY())
+                results = computeBreakPoint(p1, p, min.point.getY())
+                #Regarder plus proche suivant X du quel, Pas Y???
+                d1 = abs(results[0].getX() - site.point.getX())
+                d2 = abs(results[0].getX() - site.point.getX())
+                if d1 < d2:
+                    self.addEvent(min)
+                elif d1 > d2:
+                    #Echanger sites...
+                    self.addEvent(min)
+                elif d1 == d2:
+                    #Ajout 2 event
+
             else:
                 if p1 is not None:
                     min = findMinCircle(p1, p, site)
