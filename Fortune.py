@@ -82,19 +82,22 @@ class Fortune:
             # AJout des breakpoints
             #Cas spécial
 
-            if p1 is p3:
+            if p1 is p3 and p1 is not None:
+                print("A")
                 min = findMinCircle(p1, p, site)
-                results = computeBreakPoint(p1, p, min.point.getY())
-                #Regarder plus proche suivant X du quel, Pas Y???
-                d1 = abs(results[0].getX() - site.point.getX())
-                d2 = abs(results[0].getX() - site.point.getX())
-                if d1 < d2:
-                    self.addEvent(min)
-                elif d1 > d2:
-                    #Echanger sites...
-                    self.addEvent(min)
-                elif d1 == d2:
-                    #Ajout 2 event
+                if self.isValidVertex(min) and min.point.getY() >= site.point.getY():
+                    results = computeBreakPoint(p1, p, min.point.getY())
+                    #Regarder plus proche suivant X du quel, Pas Y???
+                    d1 = (results[0] - min.center).getMagnitude()
+                    d2 = (results[1] - min.center).getMagnitude()
+                    vertexVerif(min)
+                    if d1 < d2:
+                        self.addEvent(min)
+                    elif d1 > d2:
+                        min.sites[0], min.sites[2] = min.sites[2], min.sites[0]
+                        self.addEvent(min)
+                    assert(d1 != d2), "What?"
+
 
             else:
                 if p1 is not None:
@@ -215,8 +218,7 @@ class Fortune:
         while i > -1 and vSite.point.getY() >= self.sites[i].point.getY():
             if self.sites[i] not in vSite.sites:
                 vec = vSite.center - self.sites[i].point
-                if vec.getMagnitude() < radius:
-
+                if vec.getMagnitude() < radius and self.sites[i] not in vSite.sites:
                     return False
             i -= 1
         return True

@@ -134,12 +134,12 @@ def mouse(event):
     ""
     fortune.init(vec, False)
     """
-
+    print(a)
     vec.append(a)
     fortune.init(vec, False)
     fortune.beachLine.update(float(fortune.rEvents[len(fortune.rEvents) - 1].point.getY() + 100)/fac.getY())
 
-    print(a)
+
     full(event)
     start[0] = True
 
@@ -181,7 +181,11 @@ if __name__ == "__main__":
 
     vec.append(Vector3D(2.96666667, 1.01666667))
     vec.append(Vector3D(4, 1))
+    vec.append(Vector3D(10.2, 1.58333333))
+    vec.append(Vector3D(11.78333333, 1.25))
 
+    #[ 10.08333333   4.06666667   0.           1.        ]
+    #[ 11.78333333   1.25         0.           1.        ]
 
     #vec.append(Vector3D(9.5, 2.06666667))
 
@@ -202,10 +206,10 @@ if __name__ == "__main__":
 
     start = [True]
     for i in vec:
-        i.setY(i.getY() + 0)
+        i.setY(i.getY() +40)
         i.setX(i.getX() + 0)
 
-    fac = Vector3D(60, 60)
+    fac = Vector3D(15, 15)
     ly = [0]
 
     mousePos = Vector3D(-1, -1)

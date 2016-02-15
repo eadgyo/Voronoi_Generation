@@ -181,8 +181,8 @@ class Node:
         self.site = None
 
         # Set values
-        self.value = p.point.getY()
-        self.right.value = p.point.getY()
+        self.value = p.point.getX()
+        self.right.value = p.point.getX()
 
     def eraseNode(self, p0, piN, pkN, edges):
         # On ajoute le point centre au root edge et au second root node
@@ -248,7 +248,7 @@ class Node:
         elif self.root is None:
             v = self.deep() - 1
             leafs = math.pow(2, v)
-            sizeA = sizeD*math.pow(1.04, v)
+            sizeA = sizeD*math.pow(0.96, v) # <- to reduce size of tree
             size = sizeA*leafs/2
 
             if self.left is not None:
