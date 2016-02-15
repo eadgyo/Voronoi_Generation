@@ -83,7 +83,6 @@ class Fortune:
             #Cas spécial
 
             if p1 is p3 and p1 is not None:
-                print("A")
                 min = findMinCircle(p1, p, site)
                 if self.isValidVertex(min) and min.point.getY() >= site.point.getY():
                     results = computeBreakPoint(p1, p, min.point.getY())
@@ -97,8 +96,6 @@ class Fortune:
                         min.sites[0], min.sites[2] = min.sites[2], min.sites[0]
                         self.addEvent(min)
                     assert(d1 != d2), "What?"
-
-
             else:
                 if p1 is not None:
                     min = findMinCircle(p1, p, site)
