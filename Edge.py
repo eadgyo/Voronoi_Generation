@@ -8,6 +8,7 @@ class Edge:
         self.vec = vec
         self.p0 = p0
         self.p1 = p1
+        self.c = False
 
     def addPoint(self, p):
         if self.p0 is None:
@@ -16,11 +17,11 @@ class Edge:
             assert(self.p1 is None)
             self.p1 = p
 
-    def set(self, pV, i):
+    def set(self, p, i):
         if i:
-            self.p1 = pV.center
+            self.p1 = p
         else:
-            self.p0 = pV.center
+            self.p0 = p
 
     def add(self, edge, i):
         if i:
@@ -48,7 +49,7 @@ class Edge:
         if self.p1 is not None and self.p0 is not None:
             self.p1.drawF(screen, fX, fY, "Red")
 
-
+        """
         if (self.p0 is None and self.p1 is not None) or (self.p0 is not None and self.p1 is None):
             # On regarde les voisins précédents ou suivant
             if len(self.prec) == 0 and len(self.next) == 0:
@@ -89,10 +90,10 @@ class Edge:
                         else:
                             A = 0
 
-            if A != -1:
-                if A:
-                    self.vec *= -1
 
+            if A == 1:
+                self.vec *= -1
+            if A != -1:
                 if abs(self.vec.getY()) > abs(self.vec.getX()):
                     if self.vec.getY() < 0.0:
                         if p.getY() > 0:
@@ -115,3 +116,6 @@ class Edge:
                             fac = (maxX - p.getX())/abs(self.vec.getX())
                             y = p.getY() + fac*self.vec.getY()
                             screen.create_line(p.getX() * fX, p.getY() * fY, maxX * fX, y * fY)
+        """
+
+

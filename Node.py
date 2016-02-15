@@ -59,17 +59,11 @@ class Node:
         iNode2 = self.right.low()
         c = None
         breakpoints = computeBreakPoint(iNode1.site, iNode2.site, ly)
-        """if len(breakpoints) == 2:
-            if iNode1.site.point.getY() < iNode2.site.point.getY():
-                c = breakpoints[0]
-            else:
-                c = breakpoints[1]
-        else:
-            assert(len(breakpoints) != 0)
-            c = breakpoints[0]"""
+
         if len(breakpoints) != 0:
             c = breakpoints[0]
             self.value = c.getX()
+            self.edge.set(c, self.p)
 
         if not self.left.isLeaf():
             self.left.update(ly)
@@ -209,12 +203,12 @@ class Node:
         self.root.edge.test()
         toModify.edge.test()
 
-        self.root.edge.set(p0, self.root.p)
+        self.root.edge.set(p0.center, self.root.p)
         #self.root.edge.prec.append(toModify.edge)
         self.root.edge.add(toModify.edge, self.root.p)
         #toModify.edge.next.append(self.root.edge)
         toModify.edge.add(self.root.edge, toModify.p)
-        toModify.edge.set(p0, toModify.p)
+        toModify.edge.set(p0.center, toModify.p)
         tP = toModify.p
         lastEdge = toModify.edge
 
@@ -225,7 +219,7 @@ class Node:
         #toModify.edge.prec.append(lastEdge)
         toModify.edge.add(lastEdge, 0)
         lastEdge.add(toModify.edge, tP)
-        toModify.edge.set(p0, 0)
+        toModify.edge.set(p0.center, 0)
         toModify.p = 1
         edges.append(toModify.edge)
 

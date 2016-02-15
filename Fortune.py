@@ -10,6 +10,7 @@ class Fortune:
         self.init(points, step)
 
     def init(self, points, step):
+        self.alreadyDone = {}
         self.points = []
         for i in points:
             self.points.append(i.copy())
@@ -73,8 +74,8 @@ class Fortune:
         if p is not None:
             if p1 is not None and p3 is not None:
                 # On supprime les evenements liés aux anciens points
-                self.removeEvent(p1, p, p3)
-
+                #self.removeEvent(p1, p, p3)
+                pass
             # Création du segment
             # createEdge(p, site)
 
@@ -171,14 +172,29 @@ class Fortune:
                 break
             i -= 1
 
-        if len(site.sites) == 1:
-            pass
+
+        self.alreadyDone[Fortune.getChain(site)] = True
 
         # test
         for x in range(len(self.events)-1):
             if self.events[x].point.getY() < self.events[x+1].point.getY():
                 print("error")
         self.events.insert(i+1, site)
+
+    @staticmethod
+    def getChain(site):
+        sites = list(site.sites)
+        for i in range(len(sites)):
+            for j in range(i+1, len(sites)):
+                if int(sites[i].name[1:]) > int(sites[j].name[1:]):
+                    sites[i], sites[j] = sites[j], sites[i]
+
+        ch = ""
+        for i in range(len(sites)):
+            ch += sites[i].name
+
+        return ch
+
 
     def removeEvent(self, p1, p, p3):
         i = 0
@@ -203,6 +219,9 @@ class Fortune:
     def isValidVertex(self, vSite):
         if vSite is None:
             return False
+        if Fortune.getChain(vSite) in self.alreadyDone:
+            return False
+
         radius = (vSite.center - vSite.point).getMagnitude()
         i = len(self.sites) - 1
         while i > -1 and vSite.point.getY() >= self.sites[i].point.getY():

@@ -22,8 +22,13 @@ def step(event):
         print("-------------")
         print("")
         """
-    else:
+    elif len(fortune.events) > 0:
+        fortune.beachLine.update(float((ly[0]+ 10))/fac.getY())
         ly[0] += 10
+    else:
+        fortune.beachLine.update(float((ly[0]+ 10))/fac.getY())
+        ly[0] += 10
+
 
     canvas.create_line(0, ly[0], 500, ly[0], fill="red")
     for i in range(len(vec)):
@@ -40,7 +45,7 @@ def step(event):
             a.setX(rE[i].point.getX() * fac.getX())
             a.setY(rE[i].point.getY() * fac.getY())
             a.draw(canvas)
-            #draw_Pol(canvas, a, ly[0])
+            draw_Pol(canvas, a, ly[0])
             canvas.create_text(a.getX() - 10, a.getY()  + 12, anchor=W, font="Arial 8", text=str(rE[i]))
 
     E = fortune.events
@@ -82,9 +87,10 @@ def step(event):
     fortune.beachLine.draw(canvas, 1000, 100, 6)
 
 def full(event):
-    global coords
+    if event is not None:
+        global coords
 
-    touche = event.keysym
+        touche = event.keysym
     canvas.delete(ALL)
 
     canvas.create_line(0, ly[0], 500, ly[0], fill="red")
@@ -131,6 +137,7 @@ def mouse(event):
 
     vec.append(a)
     fortune.init(vec, False)
+    fortune.beachLine.update(float(fortune.rEvents[len(fortune.rEvents) - 1].point.getY() + 100)/fac.getY())
 
     print(a)
     full(event)
@@ -142,15 +149,25 @@ def mouse(event):
 
 
 def draw_Pol(screen, p, y):
-    fac = 10
+    fac = 5
+    start = 100
     a = p.getY()*p.getY() - y*y
     b = (2*(y - p.getY()))
+
+    x2 = p.getX() - start*fac
+    h = (p.getX() - x2)*(p.getX() - x2) + a
     if b != 0.0:
-        for x in range(500):
-            x1 = x + p.getX() - 250
-            h = (p.getX() - x1)*(p.getX() - x1) + a
-            y1 = -h/b
-            screen.create_oval(x1 - 1, y1 - 1, x1 + 1, y1 + 1, fill='black')
+        y2 = -h/b
+
+        if b != 0.0:
+            for x in range(start*2):
+                x1 = x*fac + p.getX() - start*fac
+                h = (p.getX() - x1)*(p.getX() - x1) + a
+                y1 = -h/b
+                screen.create_line(x1, y1, x2, y2, fill='black')
+
+                x2 = x1
+                y2 = y1
 
 
 if __name__ == "__main__":
@@ -159,8 +176,16 @@ if __name__ == "__main__":
 
 
     vec = []
+    vec.append(Vector3D(6.58333333, 1.1))
     vec.append(Vector3D(6.1,  2))
+
+
     vec.append(Vector3D(4, 1))
+
+
+    vec.append(Vector3D(9.5, 2.06666667))
+    vec.append(Vector3D(11.41666667,3.61666667))
+
     vec.append(Vector3D(5, 2.7))
     vec.append(Vector3D(3.2, 3))
     vec.append(Vector3D(4.2, 4))
@@ -170,10 +195,11 @@ if __name__ == "__main__":
     vec.append(Vector3D(3, 8.2))
     vec.append(Vector3D(1, 7))
 
+
     start = [True]
     for i in vec:
-        i.setY(i.getY() + 1)
-        i.setX(i.getX() + 5)
+        i.setY(i.getY() + 0)
+        i.setX(i.getX() + 0)
 
     fac = Vector3D(60, 60)
     ly = [0]
@@ -182,10 +208,16 @@ if __name__ == "__main__":
 
     canvas.focus_set()
     fortune = Fortune(vec, True)
+    #full(None)
+
     canvas.bind("<Key>", clavier)
     canvas.bind("<Button-1>", mouse)
 
+
+
     canvas.pack()
+
+
 
     fenetre.mainloop()
 
