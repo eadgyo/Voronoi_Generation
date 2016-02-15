@@ -32,11 +32,11 @@ class Node:
             return self.right.insert(p0, edges)
 
     def remove(self, p0, edges):
-        if p0.on is self.site:
+        if p0.sites[1] is self.site:
             piN = self.fullLast()
-            if piN[0] is not None and piN[0].site in p0.sites:
+            if piN[0] is not None and piN[0].site is p0.sites[0]:
                 pkN = self.fullNext()
-                if pkN[0] is not None and pkN[0].site in p0.sites:
+                if pkN[0] is not None and pkN[0].site is p0.sites[2]:
                     p1 = piN[0].lastSite()
                     p2 = pkN[0].nextSite()
                     pi = piN[0].site
@@ -45,7 +45,6 @@ class Node:
                     return [p1, pi, pk, p2]
 
         if self.isLeaf():
-            #assert(False), "No site found"
             return None
         else:
             l = self.left.remove(p0, edges)
@@ -151,11 +150,6 @@ class Node:
         self.edge = createEdge(p, self.site)
 
         edges.append(self.edge)
-        """
-        if self.root is not None:
-            self.edge.prec.append(self.root.edge)
-            self.root.edge.next.append(self.edge)
-        """
 
         if isNull(p.point.getY() - self.site.point.getY()):
             self.p = 1
@@ -204,9 +198,7 @@ class Node:
         toModify.edge.test()
 
         self.root.edge.set(p0.center, self.root.p)
-        #self.root.edge.prec.append(toModify.edge)
         self.root.edge.add(toModify.edge, self.root.p)
-        #toModify.edge.next.append(self.root.edge)
         toModify.edge.add(self.root.edge, toModify.p)
         toModify.edge.set(p0.center, toModify.p)
         tP = toModify.p
@@ -216,13 +208,11 @@ class Node:
         toModify.edge.test()
 
         toModify.edge = createEdge(piN[0].site, pkN[0].site)
-        #toModify.edge.prec.append(lastEdge)
         toModify.edge.add(lastEdge, 0)
         lastEdge.add(toModify.edge, tP)
         toModify.edge.set(p0.center, 0)
         toModify.p = 1
         edges.append(toModify.edge)
-
 
         lastEdge.test()
         self.root.edge.test()

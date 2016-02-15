@@ -179,13 +179,17 @@ if __name__ == "__main__":
     vec.append(Vector3D(6.58333333, 1.1))
     vec.append(Vector3D(6.1,  2))
 
-
+    vec.append(Vector3D(2.96666667, 1.01666667))
     vec.append(Vector3D(4, 1))
 
 
-    vec.append(Vector3D(9.5, 2.06666667))
+    #vec.append(Vector3D(9.5, 2.06666667))
+
     vec.append(Vector3D(11.41666667,3.61666667))
 
+    vec.append(Vector3D(6.6, 6.78333333))
+    vec.append(Vector3D(2.88333333, 6.08333333))
+    """
     vec.append(Vector3D(5, 2.7))
     vec.append(Vector3D(3.2, 3))
     vec.append(Vector3D(4.2, 4))
@@ -194,7 +198,7 @@ if __name__ == "__main__":
     vec.append(Vector3D(1, 5))
     vec.append(Vector3D(3, 8.2))
     vec.append(Vector3D(1, 7))
-
+    """
 
     start = [True]
     for i in vec:

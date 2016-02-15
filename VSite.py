@@ -5,8 +5,7 @@ class VSite (Site):
     def __init__(self, point, center):
         Site.__init__(self, point)
         self.center = center
-        self.type = 0
-        self.on = None
+
 
     def __str__(self):
         if len(self.sites) == 3:

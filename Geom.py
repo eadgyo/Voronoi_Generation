@@ -47,9 +47,9 @@ def findMinCircle(p1, p2, p3):
 
 
 def computeBreakPoint(p1, p2, ly):
-    x1 = p1.point.getX(); x1_2 = x1*x1; x2 = p2.point.getX(); x2_2 = x2*x2;
-    y1 = p1.point.getY(); y1_2 = y1*y1; y2 = p2.point.getY(); y2_2 = y2*y2;
-    ly_2 = ly*ly;
+    x1 = p1.point.getX(); x1_2 = x1*x1; x2 = p2.point.getX(); x2_2 = x2*x2
+    y1 = p1.point.getY(); y1_2 = y1*y1; y2 = p2.point.getY(); y2_2 = y2*y2
+    ly_2 = ly*ly
 
     # First part
     h = x1_2 + y1_2 - ly_2
@@ -141,72 +141,6 @@ def vertexVerif(min):
     min.sites[0].sites.append(min)
     min.sites[1].sites.append(min)
     min.sites[2].sites.append(min)
-
-    # Ajout des edges et set le type
-    if min.sites[1] is min.on:  # min.sites[1].point.getY() <= min.sites[0].point.getY() and min.sites[1].point.getY() <= min.sites[2].point.getY():
-
-        min.type = 0
-        """
-        edge = None
-        i = 0
-
-        while edge is None:
-            if min.sites[0].edges[i] in min.sites[1].edges:
-                edge = min.sites[0].edges[i]
-            i += 1
-        min.edges.append(edge)
-
-        edge = None
-        i = 0
-        while edge is None:
-            if min.sites[2].edges[i] in min.sites[1].edges:
-                edge = min.sites[2].edges[i]
-            i += 1
-        min.edges.append(edge)
-        """
-
-    else:  # if min.sites[1].point.getY() > min.sites[0].point.getY() and min.sites[1].point.getY() > min.sites[2].point.getY():
-        min.type = 1
-
-        """
-        edge = None
-        i = 0
-
-        while edge is None:
-            if min.sites[0].edges[i] in min.sites[2].edges:
-                edge = min.sites[0].edges[i]
-            i += 1
-        min.edges.append(edge)
-
-        # L'autre on cherche
-        edge = None
-        i = 0 # A régler
-        while edge is None:
-            if min.sites[1].edges[i] in min.on.edges:
-                edge = min.sites[1].edges[i]
-            i += 1
-
-        min.edges.append(edge)
-        """
-    """
-    else:
-        min.type = 0
-        edge = None
-        i = 0
-        while edge is None:
-            if min.sites[0].edges[i] in min.sites[1].edges:
-                edge = min.sites[0].edges[i]
-            i += 1
-        min.edges.append(edge)
-
-        edge = None
-        i = 0
-        while edge is None:
-            if min.sites[2].edges[i] in min.sites[1].edges:
-                edge = min.sites[2].edges[i]
-            i += 1
-        min.edges.append(edge)
-    """
 
 
 def getPosCurve(p, x, y):
