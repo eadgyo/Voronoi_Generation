@@ -176,23 +176,23 @@ if __name__ == "__main__":
 
 
     vec = []
-    vec.append(Vector3D(6.58333333, 1.1))
-    vec.append(Vector3D(6.1,  2))
+    #vec.append(Vector3D(6.58333333, 1.1))
+    #vec.append(Vector3D(6.1,  2))
 
-    vec.append(Vector3D(2.96666667, 1.01666667))
-    vec.append(Vector3D(4, 1))
-    vec.append(Vector3D(10.2, 1.58333333))
-    vec.append(Vector3D(11.78333333, 1.25))
+    #vec.append(Vector3D(2.96666667, 1.01666667))
+    #vec.append(Vector3D(4, 1))
+    #vec.append(Vector3D(10.2, 1.58333333))
+    #vec.append(Vector3D(11.78333333, 1.25))
 
-    #[ 10.08333333   4.06666667   0.           1.        ]
-    #[ 11.78333333   1.25         0.           1.        ]
+    ##[ 10.08333333   4.06666667   0.           1.        ]
+    ##[ 11.78333333   1.25         0.           1.        ]
 
-    #vec.append(Vector3D(9.5, 2.06666667))
+    ##vec.append(Vector3D(9.5, 2.06666667))
 
-    vec.append(Vector3D(11.41666667,3.61666667))
+    #vec.append(Vector3D(11.41666667,3.61666667))
 
-    vec.append(Vector3D(6.6, 6.78333333))
-    vec.append(Vector3D(2.88333333, 6.08333333))
+    #vec.append(Vector3D(6.6, 6.78333333))
+    #vec.append(Vector3D(2.88333333, 6.08333333))
     """
     vec.append(Vector3D(5, 2.7))
     vec.append(Vector3D(3.2, 3))
